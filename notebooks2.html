@@ -1,0 +1,1505 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Análisis Exploratorio de Datos (EDA) &#8212; Características clínicas y de mutación de la graduación del glioma - Visualización de Datos 202630</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/UN.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/UN.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Análisis Exploratorio de Datos (EDA)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/notebooks2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Análisis Exploratorio de Datos (EDA)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto-de-los-datos">Contexto de los datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables genéticas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes">Datos faltantes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-exploratorio-de-datos-eda">
+<h1>Análisis Exploratorio de Datos (EDA)<a class="headerlink" href="#analisis-exploratorio-de-datos-eda" title="Permalink to this heading">#</a></h1>
+<section id="contexto-de-los-datos">
+<h2>Contexto de los datos<a class="headerlink" href="#contexto-de-los-datos" title="Permalink to this heading">#</a></h2>
+<p>El conjunto de datos utilizado para el análisis es <code class="docutils literal notranslate"><span class="pre">TCGA_InfoWithGrade.csv</span></code>,
+correspondiente a una versión preprocesada de los datos relacionados con
+gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Librerias</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+
+<span class="n">df_mutations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/joshu/OneDrive/Escritorio/dataviz/dataviz_2026/TCGA_GBM_LGG_Mutations_all.csv&quot;</span><span class="p">)</span>
+<span class="n">df_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/joshu/OneDrive/Escritorio/dataviz/dataviz_2026/TCGA_InfoWithGrade.csv&quot;</span><span class="p">)</span>
+
+<span class="c1">#df_mutations.head()</span>
+<span class="n">df_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grade</th>
+      <th>Gender</th>
+      <th>Age_at_diagnosis</th>
+      <th>Race</th>
+      <th>IDH1</th>
+      <th>TP53</th>
+      <th>ATRX</th>
+      <th>PTEN</th>
+      <th>EGFR</th>
+      <th>CIC</th>
+      <th>...</th>
+      <th>FUBP1</th>
+      <th>RB1</th>
+      <th>NOTCH1</th>
+      <th>BCOR</th>
+      <th>CSMD3</th>
+      <th>SMARCA4</th>
+      <th>GRIN2A</th>
+      <th>IDH2</th>
+      <th>FAT4</th>
+      <th>PDGFRA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>51.30</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>38.72</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>35.17</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>1</td>
+      <td>32.78</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>31.51</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grade</th>
+      <th>Gender</th>
+      <th>Age_at_diagnosis</th>
+      <th>Race</th>
+      <th>IDH1</th>
+      <th>TP53</th>
+      <th>ATRX</th>
+      <th>PTEN</th>
+      <th>EGFR</th>
+      <th>CIC</th>
+      <th>...</th>
+      <th>FUBP1</th>
+      <th>RB1</th>
+      <th>NOTCH1</th>
+      <th>BCOR</th>
+      <th>CSMD3</th>
+      <th>SMARCA4</th>
+      <th>GRIN2A</th>
+      <th>IDH2</th>
+      <th>FAT4</th>
+      <th>PDGFRA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>51.30</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>38.72</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>35.17</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>1</td>
+      <td>32.78</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>31.51</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>834</th>
+      <td>1</td>
+      <td>1</td>
+      <td>77.89</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>835</th>
+      <td>1</td>
+      <td>0</td>
+      <td>85.18</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>836</th>
+      <td>1</td>
+      <td>1</td>
+      <td>77.49</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>837</th>
+      <td>1</td>
+      <td>0</td>
+      <td>63.33</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>838</th>
+      <td>1</td>
+      <td>0</td>
+      <td>76.61</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>839 rows × 24 columns</p>
+</div></div></div>
+</div>
+<section id="variable-objetivo">
+<h3>Variable objetivo<a class="headerlink" href="#variable-objetivo" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Grade</span></code></strong>: indica el grado del glioma. Esta variable distingue entre
+los dos grupos principales presentes en el conjunto de datos:
+<code class="docutils literal notranslate"><span class="pre">LGG</span></code> (<em>Low-Grade Glioma</em>) y <code class="docutils literal notranslate"><span class="pre">GBM</span></code> (<em>Glioblastoma Multiforme</em>).</p></li>
+</ul>
+</section>
+<section id="variables-clinicas">
+<h3>Variables clínicas<a class="headerlink" href="#variables-clinicas" title="Permalink to this heading">#</a></h3>
+<p>Las variables clínicas proporcionan información sobre las características
+demográficas de los pacientes:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Gender</span></code></strong>: género del paciente.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></strong>: edad del paciente al momento del diagnóstico.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Race</span></code></strong>: raza reportada del paciente.</p></li>
+</ul>
+</section>
+<section id="variables-geneticas">
+<h3>Variables genéticas<a class="headerlink" href="#variables-geneticas" title="Permalink to this heading">#</a></h3>
+<p>El conjunto de datos también contiene variables correspondientes a
+diferentes genes. Estas variables están codificadas de forma binaria,
+indicando con un valor de <strong>1</strong> la presencia de una mutación en el gen
+correspondiente, y con un <strong>0</strong> la ausencia de dicha mutación.</p>
+<p>Entre los genes incluidos se encuentran:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong>: codifica una enzima involucrada en el metabolismo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong>: gen supresor tumoral que participa en el control del ciclo
+celular y en la respuesta al daño del ADN. Sus alteraciones pueden
+favorecer la proliferación de células tumorales.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong>: participa en el mantenimiento de la estructura de la
+cromatina y en la estabilidad del genoma.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong>: gen supresor tumoral que regula vías relacionadas con el
+crecimiento y la supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong>: codifica un receptor involucrado en señales de crecimiento
+y proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong>: participa en la regulación de la expresión de otros genes y
+en procesos relacionados con el desarrollo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">MUC16</span></code></strong>: codifica una proteína de gran tamaño asociada a la
+superficie celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code></strong>: participa en la vía de señalización PI3K/AKT, relacionada
+con crecimiento, supervivencia y proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NF1</span></code></strong>: actúa como regulador negativo de señales relacionadas con el
+crecimiento celular. Sus alteraciones pueden contribuir a la
+proliferación tumoral.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code></strong>: codifica una subunidad reguladora de la vía PI3K, que
+interviene en procesos de crecimiento y supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FUBP1</span></code></strong>: participa en la regulación de la expresión génica y del
+crecimiento celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">RB1</span></code></strong>: gen supresor tumoral que participa en el control del ciclo
+celular y regula la progresión de las células hacia la división.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code></strong>: forma parte de la vía de señalización Notch, relacionada
+con la diferenciación, proliferación y supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">BCOR</span></code></strong>: participa en la regulación de la expresión génica mediante
+complejos relacionados con la cromatina.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CSMD3</span></code></strong>: codifica una proteína de gran tamaño y se encuentra entre
+los genes que pueden presentar mutaciones en distintos tumores.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code></strong>: participa en la remodelación de la cromatina y, por
+tanto, en la regulación de la expresión de los genes.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code></strong>: codifica una subunidad de un receptor de glutamato,
+relacionado principalmente con la señalización neuronal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH2</span></code></strong>: codifica una enzima metabólica relacionada con IDH1.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FAT4</span></code></strong>: participa en procesos relacionados con la organización,
+adhesión y crecimiento de las células.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code></strong>: codifica un receptor involucrado en señales de
+crecimiento y proliferación celular.</p></li>
+</ul>
+<p>El dataset está compuesto por 24 variables de las cuales 23 son binarias mientras que <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> es númerica (<code class="docutils literal notranslate"><span class="pre">float64</span></code>), expresando
+en años la edad del paciente al momento del diagnóstico, donde la parte
+decimal incorpora información adicional sobre los días transcurridos.</p>
+<p>El objetivo a resolver es predecir la severidad del glioma en pacientes, clasificándolos entre Glioma de Bajo Grado (<strong>LGG</strong>) y Glioblastoma Multiforme (<strong>GBM</strong>) a partir de sus características clínicas y perfil de mutaciones genéticas. Sin embargo, antes de entrenar modelos de clasificación supervisados y realizar la selección óptima de variables, iniciaremos con un análisis exploratorio de datos (EDA) sobre el conjunto de entrenamiento (Train set) derivado del dataset TCGA Glioma. El propósito es comprender la estructura de las variables, identificar los patrones de mutación genéticos más frecuentes, detectar valores atípicos y analizar las relaciones clave entre los biomarcadores clínicos y las alteraciones moleculares que diferencian ambos tipos de tumor.</p>
+</section>
+</section>
+<section id="estructura">
+<h2>Estructura<a class="headerlink" href="#estructura" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Conformacion</span>
+<span class="n">df_info</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 839 entries, 0 to 838
+Columns: 24 entries, Grade to PDGFRA
+dtypes: float64(1), int64(23)
+memory usage: 157.4 KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>El conjunto de datos presenta una estructura completamente limpia y estructurada de 839 registros y 24 variables, sin presencia de valores nulos o faltantes. Está compuesto por una única variable continua de tipo flotante correspondiente a la edad al diagnóstico (<code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code>) y 23 variables enteras que condensan la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>), las características demográficas de género y raza, y la presencia binaria de mutaciones en los 20 genes analizados. Con un consumo de memoria optimizado de apenas 157.4 KB, esta arquitectura tabular ligera permite ejecutar análisis exploratorios, transformaciones de ingeniería de características y entrenamientos de modelos predictivos de manera altamente eficiente.</p>
+</section>
+<section id="datos-faltantes">
+<h2>Datos faltantes<a class="headerlink" href="#datos-faltantes" title="Permalink to this heading">#</a></h2>
+<p>A continuación se revisan los valores faltantes y las principales
+estadísticas descriptivas del conjunto de datos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores faltantes:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_info</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valores faltantes:
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<p>El conjunto de datos no presenta datos faltantes.</p>
+</section>
+<section id="division-del-dataset">
+<h2>División del dataset<a class="headerlink" href="#division-del-dataset" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="n">conteo</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">proporcion</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_info</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución Global de Tipos de Glioma (Target)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Clase (0 = LGG, 1 = GBM)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad de Pacientes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;LGG (58.05%)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (41.95%)&#39;</span><span class="p">])</span>
+
+<span class="c1"># Añadir etiquetas de conteo sobre las barras</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()),</span> 
+                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> 
+                <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a5533fad2cbab9e90a00176fde15897c3a034d8333ff9c9f55927ac1016b2f64.png" src="_images/a5533fad2cbab9e90a00176fde15897c3a034d8333ff9c9f55927ac1016b2f64.png" />
+</div>
+</div>
+<p>La elección de una partición estratificada (Stratified Train-Test Split) se justifica por la necesidad de preservar la proporción original de las clases de la variable objetivo (Grade) en ambos subconjuntos de datos. En el dataset completo, la distribución presenta un ligero desbalance, donde el 58.05% corresponde a Gliomas de Bajo Grado (LGG) y el 41.95% a Glioblastomas (GBM), una división sin estratificar podría dejar los conjuntos de <code class="docutils literal notranslate"><span class="pre">train</span></code> y <code class="docutils literal notranslate"><span class="pre">test</span></code> sesgados a un solo grupo de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">df_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span> 
+    <span class="n">y</span><span class="p">,</span> 
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> 
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> 
+    <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para asegurar una evaluación rigurosa del modelo y prevenir la fuga de datos, el conjunto original de 839 registros se dividió en una proporción 80/20 mediante una partición estratificada basada en la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>). De este modo, se reservó un conjunto de prueba (<em>Test set</em>) compuesto por 168 pacientes exclusivamente para la validación final del rendimiento, mientras que las 671 observaciones restantes formaron el conjunto de entrenamiento (<em>Train set</em>), garantizando que el patrón de distribución de las clases —aproximadamente 58% para tumores de bajo grado (LGG) y 42% para glioblastomas (GBM)— se mantuviera perfectamente balanceado entre ambas subdivisiones.</p>
+</section>
+<section id="analisis-univariado-de-variables">
+<h2>Análisis Univariado de variables<a class="headerlink" href="#analisis-univariado-de-variables" title="Permalink to this heading">#</a></h2>
+<section id="analisis-de-la-variable-grade-target">
+<h3>Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)<a class="headerlink" href="#analisis-de-la-variable-grade-target" title="Permalink to this heading">#</a></h3>
+<p>Resumen estadístico de la variable objetivo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estadísticas descriptivas:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_info</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadísticas descriptivas:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Grade</th>
+      <td>839.0</td>
+      <td>0.419547</td>
+      <td>0.493779</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td>839.0</td>
+      <td>0.418355</td>
+      <td>0.493583</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>Age_at_diagnosis</th>
+      <td>839.0</td>
+      <td>50.935411</td>
+      <td>15.702339</td>
+      <td>14.42</td>
+      <td>38.055</td>
+      <td>51.55</td>
+      <td>62.8</td>
+      <td>89.29</td>
+    </tr>
+    <tr>
+      <th>Race</th>
+      <td>839.0</td>
+      <td>0.107271</td>
+      <td>0.369392</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>3.00</td>
+    </tr>
+    <tr>
+      <th>IDH1</th>
+      <td>839.0</td>
+      <td>0.481526</td>
+      <td>0.499957</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>TP53</th>
+      <td>839.0</td>
+      <td>0.414779</td>
+      <td>0.492978</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>ATRX</th>
+      <td>839.0</td>
+      <td>0.258641</td>
+      <td>0.438149</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>1.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>PTEN</th>
+      <td>839.0</td>
+      <td>0.168057</td>
+      <td>0.374140</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>EGFR</th>
+      <td>839.0</td>
+      <td>0.133492</td>
+      <td>0.340309</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>CIC</th>
+      <td>839.0</td>
+      <td>0.132300</td>
+      <td>0.339019</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>MUC16</th>
+      <td>839.0</td>
+      <td>0.116806</td>
+      <td>0.321380</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>PIK3CA</th>
+      <td>839.0</td>
+      <td>0.087008</td>
+      <td>0.282015</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>NF1</th>
+      <td>839.0</td>
+      <td>0.079857</td>
+      <td>0.271233</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>PIK3R1</th>
+      <td>839.0</td>
+      <td>0.064362</td>
+      <td>0.245544</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>FUBP1</th>
+      <td>839.0</td>
+      <td>0.053635</td>
+      <td>0.225431</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>RB1</th>
+      <td>839.0</td>
+      <td>0.047676</td>
+      <td>0.213206</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>NOTCH1</th>
+      <td>839.0</td>
+      <td>0.045292</td>
+      <td>0.208068</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>BCOR</th>
+      <td>839.0</td>
+      <td>0.034565</td>
+      <td>0.182784</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>CSMD3</th>
+      <td>839.0</td>
+      <td>0.032181</td>
+      <td>0.176586</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>SMARCA4</th>
+      <td>839.0</td>
+      <td>0.032181</td>
+      <td>0.176586</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>GRIN2A</th>
+      <td>839.0</td>
+      <td>0.032181</td>
+      <td>0.176586</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>IDH2</th>
+      <td>839.0</td>
+      <td>0.027414</td>
+      <td>0.163383</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>FAT4</th>
+      <td>839.0</td>
+      <td>0.027414</td>
+      <td>0.163383</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>PDGFRA</th>
+      <td>839.0</td>
+      <td>0.026222</td>
+      <td>0.159889</td>
+      <td>0.00</td>
+      <td>0.000</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>There is a lot more that you can do with outputs (such as including interactive outputs)
+with your book. For more information about this, see <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto-de-los-datos">Contexto de los datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables genéticas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes">Datos faltantes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Joshua Hincapie Llorente y Alejandro Cantillo Escorcia — Universidad del Norte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

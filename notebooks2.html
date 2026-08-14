@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks2';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -361,6 +363,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#age-at-diagnosis"><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1063,317 +1069,139 @@ estadísticas descriptivas del conjunto de datos.</p>
 <h2>Análisis Univariado de variables<a class="headerlink" href="#analisis-univariado-de-variables" title="Permalink to this heading">#</a></h2>
 <section id="analisis-de-la-variable-grade-target">
 <h3>Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)<a class="headerlink" href="#analisis-de-la-variable-grade-target" title="Permalink to this heading">#</a></h3>
-<p>Resumen estadístico de la variable objetivo:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Estadísticas descriptivas:&quot;</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">df_info</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">props</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">summary_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Clase&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;LGG (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (1)&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Pacientes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="s1">&#39;Proporción (%)&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">props</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">props</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+<span class="p">})</span>
+
+<span class="c1"># 3. Visualización</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">summary_df</span><span class="p">,</span> 
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Clase&#39;</span><span class="p">,</span> 
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Pacientes&#39;</span><span class="p">,</span> 
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de la Variable Objetivo (Grade) - Train Set&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Diagnóstico de Glioma&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad de Pacientes&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">)</span>
+
+<span class="c1"># Etiquetas numéricas sobre las barras</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">):</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+    <span class="n">pct</span> <span class="o">=</span> <span class="n">summary_df</span><span class="p">[</span><span class="s1">&#39;Proporción (%)&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">pct</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
+                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadísticas descriptivas:
+<img alt="_images/6513e1987d751a8e4d8e3c314f11a783d94aab1a71c47496fb644a349200b661.png" src="_images/6513e1987d751a8e4d8e3c314f11a783d94aab1a71c47496fb644a349200b661.png" />
+</div>
+</div>
+<p>En el conjunto de entrenamiento (671 pacientes), la variable objetivo <code class="docutils literal notranslate"><span class="pre">Grade</span></code> presenta una distribución de 389 casos correspondientes a Gliomas de Bajo Grado (LGG, 58.0%) y 282 casos a Glioblastoma Multiforme (GBM, 42.0%). La relación entre clases es aproximadamente de <strong>1.38 a 1</strong>, lo que indica que <strong>no hay un desbalance severo</strong>.</p>
+</section>
+<section id="analisis-de-las-variables-independientes">
+<h3>Análisis de las variables independientes<a class="headerlink" href="#analisis-de-las-variables-independientes" title="Permalink to this heading">#</a></h3>
+<section id="age-at-diagnosis">
+<h4><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code><a class="headerlink" href="#age-at-diagnosis" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Histograma + KDE</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Edad al Diagnóstico (Train Set)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Edad (Años)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Media: </span><span class="si">{</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mediana: </span><span class="si">{</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Boxplot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#8da0cb&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Boxplot de Edad (Detección de Outliers)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Edad (Años)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count</th>
-      <th>mean</th>
-      <th>std</th>
-      <th>min</th>
-      <th>25%</th>
-      <th>50%</th>
-      <th>75%</th>
-      <th>max</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Grade</th>
-      <td>839.0</td>
-      <td>0.419547</td>
-      <td>0.493779</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>1.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>Gender</th>
-      <td>839.0</td>
-      <td>0.418355</td>
-      <td>0.493583</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>1.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>Age_at_diagnosis</th>
-      <td>839.0</td>
-      <td>50.935411</td>
-      <td>15.702339</td>
-      <td>14.42</td>
-      <td>38.055</td>
-      <td>51.55</td>
-      <td>62.8</td>
-      <td>89.29</td>
-    </tr>
-    <tr>
-      <th>Race</th>
-      <td>839.0</td>
-      <td>0.107271</td>
-      <td>0.369392</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>3.00</td>
-    </tr>
-    <tr>
-      <th>IDH1</th>
-      <td>839.0</td>
-      <td>0.481526</td>
-      <td>0.499957</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>1.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>TP53</th>
-      <td>839.0</td>
-      <td>0.414779</td>
-      <td>0.492978</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>1.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>ATRX</th>
-      <td>839.0</td>
-      <td>0.258641</td>
-      <td>0.438149</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>1.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>PTEN</th>
-      <td>839.0</td>
-      <td>0.168057</td>
-      <td>0.374140</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>EGFR</th>
-      <td>839.0</td>
-      <td>0.133492</td>
-      <td>0.340309</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>CIC</th>
-      <td>839.0</td>
-      <td>0.132300</td>
-      <td>0.339019</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>MUC16</th>
-      <td>839.0</td>
-      <td>0.116806</td>
-      <td>0.321380</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>PIK3CA</th>
-      <td>839.0</td>
-      <td>0.087008</td>
-      <td>0.282015</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>NF1</th>
-      <td>839.0</td>
-      <td>0.079857</td>
-      <td>0.271233</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>PIK3R1</th>
-      <td>839.0</td>
-      <td>0.064362</td>
-      <td>0.245544</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>FUBP1</th>
-      <td>839.0</td>
-      <td>0.053635</td>
-      <td>0.225431</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>RB1</th>
-      <td>839.0</td>
-      <td>0.047676</td>
-      <td>0.213206</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>NOTCH1</th>
-      <td>839.0</td>
-      <td>0.045292</td>
-      <td>0.208068</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>BCOR</th>
-      <td>839.0</td>
-      <td>0.034565</td>
-      <td>0.182784</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>CSMD3</th>
-      <td>839.0</td>
-      <td>0.032181</td>
-      <td>0.176586</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>SMARCA4</th>
-      <td>839.0</td>
-      <td>0.032181</td>
-      <td>0.176586</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>GRIN2A</th>
-      <td>839.0</td>
-      <td>0.032181</td>
-      <td>0.176586</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>IDH2</th>
-      <td>839.0</td>
-      <td>0.027414</td>
-      <td>0.163383</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>FAT4</th>
-      <td>839.0</td>
-      <td>0.027414</td>
-      <td>0.163383</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>PDGFRA</th>
-      <td>839.0</td>
-      <td>0.026222</td>
-      <td>0.159889</td>
-      <td>0.00</td>
-      <td>0.000</td>
-      <td>0.00</td>
-      <td>0.0</td>
-      <td>1.00</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-<p>There is a lot more that you can do with outputs (such as including interactive outputs)
-with your book. For more information about this, see <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a></p>
+<div class="cell_output docutils container">
+<img alt="_images/abc905c353d7d29c66e90698f9ba79fd9ad5ec34b1ef24cffa8bb42ec801e410.png" src="_images/abc905c353d7d29c66e90698f9ba79fd9ad5ec34b1ef24cffa8bb42ec801e410.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+<span class="c1"># Crear un DataFrame formateado para presentación</span>
+<span class="n">resumen_edad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Métrica&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Total Pacientes (n)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Promedio (Media)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Desviación Estándar&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Mínimo&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Primer Cuartil (Q1 - 25%)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Mediana (Q2 - 50%)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Tercer Cuartil (Q3 - 75%)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Máximo&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Rango Intercuartílico (IQR)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Asimetría (Skewness)&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Valor&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]),</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;25%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;50%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;75%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;75%&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;25%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== RESUMEN ESTADÍSTICO DE EDAD AL DIAGNÓSTICO (TRAIN SET) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resumen_edad</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== RESUMEN ESTADÍSTICO DE EDAD AL DIAGNÓSTICO (TRAIN SET) ===
+                    Métrica      Valor
+        Total Pacientes (n)        671
+           Promedio (Media) 51.10 años
+        Desviación Estándar 15.63 años
+                     Mínimo 14.42 años
+  Primer Cuartil (Q1 - 25%) 37.84 años
+         Mediana (Q2 - 50%) 51.99 años
+  Tercer Cuartil (Q3 - 75%) 62.62 años
+                     Máximo 89.29 años
+Rango Intercuartílico (IQR) 24.79 años
+       Asimetría (Skewness)     0.0547
+</pre></div>
+</div>
+</div>
+</div>
+<p>La variable continua Age_at_diagnosis registra una media de 51.10 años (<span class="math notranslate nohighlight">\(\pm 15.63\)</span>) y una mediana de 51.99 años en el conjunto de entrenamiento, abarcando un rango de edad desde los 14.42 hasta los 89.29 años. El análisis exploratorio revela una distribución simétrica con comportamiento bimodal (picos poblacionales cerca de los 35 y 55 años) y confirma la ausencia de valores atípicos (outliers). Este patrón sugiere la presencia de subgrupos demográficos diferenciados que posteriormente se contrastarán con el grado de severidad del tumoral (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>).</p>
+</section>
 </section>
 </section>
 </section>
@@ -1447,6 +1275,10 @@ with your book. For more information about this, see <a class="reference externa
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#age-at-diagnosis"><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

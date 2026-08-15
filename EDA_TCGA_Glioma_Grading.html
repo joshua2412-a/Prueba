@@ -1,0 +1,1822 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Caracterización Clínico-Molecular y Análisis Exploratorio de Datos del Grado Tumoral en Gliomas: Un Estudio Basado en la Cohorte TCGA &#8212; Características clínicas y de mutación de la graduación del glioma - Visualización de Datos 202630</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'EDA_TCGA_Glioma_Grading';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/UN.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/UN.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Caracterización Clínico-Molecular del Grado Tumoral en Gliomas - Visualización de Datos 2026
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks2.html">Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FEDA_TCGA_Glioma_Grading.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/EDA_TCGA_Glioma_Grading.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Caracterización Clínico-Molecular y Análisis Exploratorio de Datos del Grado Tumoral en Gliomas: Un Estudio Basado en la Cohorte TCGA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-abstract">Resumen (Abstract)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">1. Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materiales-y-metodos">2. Materiales y Métodos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">2.1 Configuración del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-conjunto-de-datos">2.2 Descripción del conjunto de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable Objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables Clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables Genéticas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-de-la-estructura-y-proposito-del-proyecto">Resumen de la Estructura y Propósito del Proyecto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados">3. Resultados</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-y-estructura-de-los-datos">3.1 Calidad y estructura de los datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-objetivo-grade">3.2 Distribución de la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables-clinicas">3.3 Análisis univariado de variables clínicas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#edad-al-diagnostico">3.3.1 Edad al diagnóstico</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sexo-y-raza">3.3.2 Sexo y raza</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevalencia-de-mutaciones-genicas">3.4 Prevalencia de mutaciones génicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-variables-clinicas-vs-grado-tumoral">3.5 Análisis bivariado: variables clínicas vs. grado tumoral</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#edad-segun-grado">3.5.1 Edad según grado</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sexo-y-raza-segun-grado">3.5.2 Sexo y raza según grado</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#asociacion-entre-mutaciones-genicas-y-grado-tumoral">3.6 Asociación entre mutaciones génicas y grado tumoral</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-correlacion-entre-variables">3.7 Estructura de correlación entre variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-multivariado-reduccion-de-dimensionalidad-pca">3.8 Análisis multivariado: reducción de dimensionalidad (PCA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discusion">4. Discusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">5. Conclusiones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="caracterizacion-clinico-molecular-y-analisis-exploratorio-de-datos-del-grado-tumoral-en-gliomas-un-estudio-basado-en-la-cohorte-tcga">
+<h1>Caracterización Clínico-Molecular y Análisis Exploratorio de Datos del Grado Tumoral en Gliomas: Un Estudio Basado en la Cohorte TCGA<a class="headerlink" href="#caracterizacion-clinico-molecular-y-analisis-exploratorio-de-datos-del-grado-tumoral-en-gliomas-un-estudio-basado-en-la-cohorte-tcga" title="Permalink to this heading">#</a></h1>
+<p><strong>Subtítulo:</strong> Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM) como base para modelos de aprendizaje automático</p>
+<hr class="docutils" />
+<p><strong>Curso:</strong> Visualización de Datos y Machine Learning
+<strong>Tipo de documento:</strong> Notebook de análisis exploratorio de datos (EDA), estructurado siguiendo la convención de un artículo científico (IMRaD)
+<strong>Dataset:</strong> <em>TCGA Glioma Grading Clinical and Mutation Features Dataset</em> (<code class="docutils literal notranslate"><span class="pre">TCGA_InfoWithGrade.csv</span></code>)
+<strong>Fecha:</strong> Agosto de 2026</p>
+<hr class="docutils" />
+<section id="resumen-abstract">
+<h2>Resumen (Abstract)<a class="headerlink" href="#resumen-abstract" title="Permalink to this heading">#</a></h2>
+<p>Los gliomas son los tumores primarios del sistema nervioso central más frecuentes en adultos, y su pronóstico depende críticamente de su grado histológico: gliomas de bajo grado (<em>Low-Grade Glioma</em>, LGG) frente a glioblastoma (<em>Glioblastoma Multiforme</em>, GBM). Este trabajo presenta un análisis exploratorio de datos (EDA) sobre una cohorte de <strong>839 pacientes</strong> del <em>The Cancer Genome Atlas</em> (TCGA), integrando variables demográficas (edad, sexo, raza) y el estado mutacional binario de <strong>20 genes</strong> frecuentemente alterados en glioma (p. ej. <em>IDH1</em>, <em>TP53</em>, <em>ATRX</em>, <em>EGFR</em>, <em>PTEN</em>). Se examinan la calidad y distribución de los datos, el balance de clases, las diferencias univariadas y bivariadas entre grados tumorales, la prevalencia mutacional diferencial, la estructura de correlación entre genes y una reducción de dimensionalidad exploratoria (PCA). Los resultados evidencian una fuerte señal discriminativa en la <strong>edad al diagnóstico</strong> y en mutaciones canónicas como <em>IDH1</em>, consistente con la literatura molecular de gliomas, y sientan las bases metodológicas para el desarrollo posterior de modelos predictivos de grado tumoral.</p>
+<p><strong>Palabras clave:</strong> glioma, TCGA, EDA, aprendizaje automático, IDH1, bioinformática, clasificación tumoral.</p>
+</section>
+<hr class="docutils" />
+<section id="introduccion">
+<h2>1. Introducción<a class="headerlink" href="#introduccion" title="Permalink to this heading">#</a></h2>
+<p>La clasificación molecular de los gliomas ha transformado la neuro-oncología en la última década, en particular tras la incorporación de biomarcadores como la mutación de <em>IDH1/IDH2</em> en los esquemas de clasificación de la OMS. El presente notebook desarrolla un EDA riguroso sobre el conjunto de datos público <em>TCGA_InfoWithGrade</em>, con dos objetivos:</p>
+<ol class="arabic simple">
+<li><p><strong>Descriptivo:</strong> caracterizar la distribución de variables clínicas y mutacionales, identificar problemas de calidad de datos (valores atípicos, desbalance de clases, colinealidad) y documentar patrones relevantes mediante visualización.</p></li>
+<li><p><strong>Preparatorio para ML:</strong> generar evidencia que oriente decisiones de <em>feature engineering</em>, selección de variables y estrategia de validación para un futuro modelo de clasificación del grado tumoral.</p></li>
+</ol>
+<p>La estructura del documento sigue el formato IMRaD adaptado a un notebook técnico: <em>Materiales y Métodos</em> (descripción de los datos), <em>Resultados</em> (EDA univariado, bivariado y multivariado), <em>Discusión</em> y <em>Conclusiones</em>.</p>
+</section>
+<section id="materiales-y-metodos">
+<h2>2. Materiales y Métodos<a class="headerlink" href="#materiales-y-metodos" title="Permalink to this heading">#</a></h2>
+<section id="configuracion-del-entorno">
+<h3>2.1 Configuración del entorno<a class="headerlink" href="#configuracion-del-entorno" title="Permalink to this heading">#</a></h3>
+<p>Se emplean las bibliotecas estándar del ecosistema científico de Python: <code class="docutils literal notranslate"><span class="pre">pandas</span></code> y <code class="docutils literal notranslate"><span class="pre">numpy</span></code> para manipulación de datos; <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> y <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> para visualización; <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> para pruebas de hipótesis; y <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> para el análisis multivariado (PCA). Se define un estilo visual consistente (tipografía, paleta de color, resolución) para asegurar una presentación homogénea y apta para publicación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --------------------------------------------------------------</span>
+<span class="c1"># Librerías</span>
+<span class="c1"># --------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="c1"># --------------------------------------------------------------</span>
+<span class="c1"># Estilo gráfico &quot;publication-ready&quot;</span>
+<span class="c1"># --------------------------------------------------------------</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;notebook&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+    <span class="s2">&quot;savefig.dpi&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s2">&quot;font.family&quot;</span><span class="p">:</span> <span class="s2">&quot;DejaVu Sans&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.titlesize&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="s2">&quot;axes.titleweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.labelsize&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s2">&quot;axes.edgecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;0.3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.grid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;grid.alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;legend.frameon&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;figure.facecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="c1"># Paleta institucional: dos tonos para LGG (0) vs GBM (1)</span>
+<span class="n">PALETTE_GRADE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;#2E86AB&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;#C1443C&quot;</span><span class="p">}</span>
+<span class="n">PALETTE_SEQ</span>   <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;mako&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="descripcion-del-conjunto-de-datos">
+<h3>2.2 Descripción del conjunto de datos<a class="headerlink" href="#descripcion-del-conjunto-de-datos" title="Permalink to this heading">#</a></h3>
+<p>El dataset contiene <strong>839 registros</strong> (pacientes) y <strong>24 variables</strong>:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Categoría</p></th>
+<th class="head"><p>Variables</p></th>
+<th class="head"><p>Codificación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Variable objetivo</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Grade</span></code></p></td>
+<td><p>0 = LGG (glioma de bajo grado), 1 = GBM (glioblastoma)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Demográficas</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Gender</span></code>, <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code>, <code class="docutils literal notranslate"><span class="pre">Race</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Gender</span></code>: 0/1; <code class="docutils literal notranslate"><span class="pre">Race</span></code>: 0–3 (categorías étnicas codificadas); <code class="docutils literal notranslate"><span class="pre">Age</span></code>: continua (años)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Mutacionales</strong></p></td>
+<td><p>20 genes (<code class="docutils literal notranslate"><span class="pre">IDH1</span></code>, <code class="docutils literal notranslate"><span class="pre">TP53</span></code>, <code class="docutils literal notranslate"><span class="pre">ATRX</span></code>, <code class="docutils literal notranslate"><span class="pre">PTEN</span></code>, <code class="docutils literal notranslate"><span class="pre">EGFR</span></code>, <code class="docutils literal notranslate"><span class="pre">CIC</span></code>, <code class="docutils literal notranslate"><span class="pre">MUC16</span></code>, <code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code>, <code class="docutils literal notranslate"><span class="pre">NF1</span></code>, <code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code>, <code class="docutils literal notranslate"><span class="pre">FUBP1</span></code>, <code class="docutils literal notranslate"><span class="pre">RB1</span></code>, <code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code>, <code class="docutils literal notranslate"><span class="pre">BCOR</span></code>, <code class="docutils literal notranslate"><span class="pre">CSMD3</span></code>, <code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code>, <code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code>, <code class="docutils literal notranslate"><span class="pre">IDH2</span></code>, <code class="docutils literal notranslate"><span class="pre">FAT4</span></code>, <code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code>)</p></td>
+<td><p>0 = no mutado, 1 = mutado</p></td>
+</tr>
+</tbody>
+</table>
+<p>No se dispone de un diccionario de datos oficial para las categorías de <code class="docutils literal notranslate"><span class="pre">Race</span></code>; se documentan como niveles 0–3 sin asumir una correspondencia específica, evitando así interpretaciones no verificadas.</p>
+</section>
+<section id="variable-objetivo">
+<h3>Variable Objetivo<a class="headerlink" href="#variable-objetivo" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Grade</span></code></strong>: Indica el grado del glioma (0 = <code class="docutils literal notranslate"><span class="pre">LGG</span></code>, 1 = <code class="docutils literal notranslate"><span class="pre">GBM</span></code>). Esta variable distingue entre los dos grupos principales del conjunto de datos: Glioma de Bajo Grado (<em>Low-Grade Glioma</em>) y Glioblastoma Multiforme (<em>Glioblastoma Multiforme</em>).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="variables-clinicas">
+<h3>Variables Clínicas<a class="headerlink" href="#variables-clinicas" title="Permalink to this heading">#</a></h3>
+<p>Proporcionan información sobre las características demográficas de los pacientes:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Gender</span></code></strong>: Género del paciente (0 = masculino, 1 = femenino).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></strong>: Edad del paciente al momento del diagnóstico expresada en años (numérica continua). La parte decimal incorpora la información exacta de los días transcurridos.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Race</span></code></strong>: Raza reportada del paciente codificada del 0 al 3 (0 = <em>White</em>, 1 = <em>Black or African American</em>, 2 = <em>Asian</em>, 3 = <em>American Indian or Alaska Native</em>).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="variables-geneticas">
+<h3>Variables Genéticas<a class="headerlink" href="#variables-geneticas" title="Permalink to this heading">#</a></h3>
+<p>Corresponden al panel de los 20 genes evaluados. Están codificados de forma binaria, donde un valor de <strong>1</strong> indica la presencia de una mutación en el gen correspondiente y un <strong>0</strong> señala la condición de gen salvaje / no mutado (<em>wildtype</em>):</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong>: Codifica una enzima involucrada en el metabolismo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong>: Gen supresor tumoral que participa en el control del ciclo celular y en la respuesta al daño del ADN. Sus alteraciones favorecen la proliferación tumoral.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong>: Participa en el mantenimiento de la estructura de la cromatina y la estabilidad genómica.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong>: Gen supresor tumoral que regula vías de crecimiento y supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong>: Codifica un receptor involucrado en señales de proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong>: Participa en la regulación de la expresión génica y el desarrollo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">MUC16</span></code></strong>: Codifica una proteína de gran tamaño asociada a la superficie celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code></strong>: Participa en la vía de señalización PI3K/AKT, relacionada con el crecimiento celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NF1</span></code></strong>: Actúa como regulador negativo de señales de crecimiento celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code></strong>: Subunidad reguladora de la vía PI3K, que interviene en la supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FUBP1</span></code></strong>: Participa en la regulación de la expresión génica y el crecimiento celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">RB1</span></code></strong>: Gen supresor tumoral que regula la progresión del ciclo celular hacia la división.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code></strong>: Forma parte de la vía Notch, vinculada con la diferenciación y proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">BCOR</span></code></strong>: Participa en la regulación génica mediante complejos relacionados con la cromatina.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CSMD3</span></code></strong>: Codifica una proteína de gran tamaño con mutaciones frecuentes en distintos tumores.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code></strong>: Participa en la remodelación de la cromatina y la regulación transcripcional.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code></strong>: Codifica una subunidad del receptor de glutamato, asociada a señalización neuronal.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH2</span></code></strong>: Codifica una enzima metabólica relacionada funcionalmente con <code class="docutils literal notranslate"><span class="pre">IDH1</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FAT4</span></code></strong>: Participa en la adhesión, organización y crecimiento celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code></strong>: Codifica un receptor involucrado en señales de crecimiento y proliferación celular.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="resumen-de-la-estructura-y-proposito-del-proyecto">
+<h3>Resumen de la Estructura y Propósito del Proyecto<a class="headerlink" href="#resumen-de-la-estructura-y-proposito-del-proyecto" title="Permalink to this heading">#</a></h3>
+<p>El dataset está compuesto por <strong>24 variables en total</strong>:</p>
+<ul class="simple">
+<li><p><strong>22 variables binarias (0/1):</strong> <code class="docutils literal notranslate"><span class="pre">Grade</span></code>, <code class="docutils literal notranslate"><span class="pre">Gender</span></code> y las 20 mutaciones genéticas.</p></li>
+<li><p><strong>1 variable categórica politómica:</strong> <code class="docutils literal notranslate"><span class="pre">Race</span></code> (codificada en 4 niveles).</p></li>
+<li><p><strong>1 variable continua:</strong> <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> (<code class="docutils literal notranslate"><span class="pre">float64</span></code>, expresada en años).</p></li>
+</ul>
+<p>El objetivo central es predecir la severidad del glioma clasificando a los pacientes entre Glioma de Bajo Grado (<strong>LGG</strong>) y Glioblastoma Multiforme (<strong>GBM</strong>) a partir de sus características clínicas y perfil mutacional.</p>
+<p>Antes de construir los modelos de clasificación supervisados y ejecutar la selección de características (<em>Feature Selection</em>), se llevará a cabo un <strong>Análisis Exploratorio de Datos (EDA)</strong> sobre el conjunto de entrenamiento (<em>Train Set</em>, <span class="math notranslate nohighlight">\(80\%\)</span> de la muestra / <span class="math notranslate nohighlight">\(n=671\)</span>). El propósito es comprender la estructura de los datos, identificar los patrones mutacionales dominantes, descartar <em>outliers</em> y evaluar la capacidad discriminativa de cada biomarcador para diferenciar la severidad del tumor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --------------------------------------------------------------</span>
+<span class="c1"># Carga de datos</span>
+<span class="c1"># --------------------------------------------------------------</span>
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;TCGA_InfoWithGrade.csv&quot;</span>  <span class="c1"># ajustar ruta si es necesario</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">)</span>
+
+<span class="n">GENES</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">CLINICAL</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">,</span> <span class="s2">&quot;Race&quot;</span><span class="p">]</span>
+<span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;Grade&quot;</span>
+
+<span class="n">GRADE_LABELS</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;LGG&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;GBM&quot;</span><span class="p">}</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">GRADE_LABELS</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensiones del dataset: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> pacientes x </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2"> variables&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensiones del dataset: 839 pacientes x 24 variables
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grade</th>
+      <th>Gender</th>
+      <th>Age_at_diagnosis</th>
+      <th>Race</th>
+      <th>IDH1</th>
+      <th>TP53</th>
+      <th>ATRX</th>
+      <th>PTEN</th>
+      <th>EGFR</th>
+      <th>CIC</th>
+      <th>MUC16</th>
+      <th>PIK3CA</th>
+      <th>NF1</th>
+      <th>PIK3R1</th>
+      <th>FUBP1</th>
+      <th>RB1</th>
+      <th>NOTCH1</th>
+      <th>BCOR</th>
+      <th>CSMD3</th>
+      <th>SMARCA4</th>
+      <th>GRIN2A</th>
+      <th>IDH2</th>
+      <th>FAT4</th>
+      <th>PDGFRA</th>
+      <th>Grade_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>51.30</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LGG</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>38.72</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LGG</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>35.17</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LGG</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>1</td>
+      <td>32.78</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>LGG</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>31.51</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>LGG</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="resultados">
+<h2>3. Resultados<a class="headerlink" href="#resultados" title="Permalink to this heading">#</a></h2>
+<section id="calidad-y-estructura-de-los-datos">
+<h3>3.1 Calidad y estructura de los datos<a class="headerlink" href="#calidad-y-estructura-de-los-datos" title="Permalink to this heading">#</a></h3>
+<p>Antes de cualquier análisis se verifica la integridad estructural del dataset: tipos de dato, valores faltantes, duplicados y rangos plausibles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --------------------------------------------------------------</span>
+<span class="c1"># Auditoría de calidad de datos</span>
+<span class="c1"># --------------------------------------------------------------</span>
+<span class="n">quality_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+    <span class="s2">&quot;n_missing&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+    <span class="s2">&quot;pct_missing&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;n_unique&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+<span class="p">})</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de valores faltantes en el dataset: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">quality_report</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total de valores faltantes en el dataset: 0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dtype</th>
+      <th>n_missing</th>
+      <th>pct_missing</th>
+      <th>n_unique</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Grade</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Age_at_diagnosis</th>
+      <td>float64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>Race</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>IDH1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>TP53</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>ATRX</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PTEN</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>EGFR</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>CIC</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>MUC16</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PIK3CA</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>NF1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PIK3R1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>FUBP1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>RB1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>NOTCH1</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>BCOR</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>CSMD3</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>SMARCA4</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>GRIN2A</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>IDH2</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>FAT4</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PDGFRA</th>
+      <td>int64</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Grade_label</th>
+      <td>object</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Hallazgo:</strong> el dataset no presenta valores faltantes ni duplicados, y todos los tipos de dato son coherentes con su naturaleza (variables binarias como <code class="docutils literal notranslate"><span class="pre">int64</span></code>, edad como <code class="docutils literal notranslate"><span class="pre">float64</span></code>). Esto simplifica el pipeline de preprocesamiento: no se requieren estrategias de imputación.</p>
+</section>
+<section id="distribucion-de-la-variable-objetivo-grade">
+<h3>3.2 Distribución de la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>)<a class="headerlink" href="#distribucion-de-la-variable-objetivo-grade" title="Permalink to this heading">#</a></h3>
+<p>El balance de clases es una consideración crítica antes de modelar, ya que un desbalance severo puede sesgar el aprendizaje hacia la clase mayoritaria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reindex</span><span class="p">([</span><span class="s2">&quot;LGG&quot;</span><span class="p">,</span> <span class="s2">&quot;GBM&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+<span class="n">pct</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">counts</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+               <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+               <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">pct</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">10.5</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Número de pacientes&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución de la variable objetivo: Grado tumoral&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">counts</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Grade_label
+LGG    487
+GBM    352
+Name: count, dtype: int64
+</pre></div>
+</div>
+<img alt="_images/3d3c41ab74407d6c032b230be0b89042254b538d616474deb4cb9caa983d7baf.png" src="_images/3d3c41ab74407d6c032b230be0b89042254b538d616474deb4cb9caa983d7baf.png" />
+</div>
+</div>
+<p><strong>Interpretación:</strong> la clase LGG representa el 58.0 % (n = 487) y GBM el 42.0 % (n = 352) de la muestra. El desbalance es <strong>moderado, no severo</strong> (ratio ≈ 1.4:1), por lo que técnicas como <em>class weighting</em> o remuestreo ligero podrían ser suficientes en la fase de modelado, sin requerir estrategias agresivas como SMOTE.</p>
+</section>
+<section id="analisis-univariado-de-variables-clinicas">
+<h3>3.3 Análisis univariado de variables clínicas<a class="headerlink" href="#analisis-univariado-de-variables-clinicas" title="Permalink to this heading">#</a></h3>
+<section id="edad-al-diagnostico">
+<h4>3.3.1 Edad al diagnóstico<a class="headerlink" href="#edad-al-diagnostico" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#2E86AB&quot;</span><span class="p">,</span>
+             <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución de la edad al diagnóstico&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Edad (años)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Frecuencia&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#2E86AB&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">fliersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Diagrama de caja - Edad&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Edad (años)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">age_desc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">skew</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">age_desc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Asimetría (skewness): </span><span class="si">{</span><span class="n">skew</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/53c24e5d8d50a6e852c3428eadb98cbe013530219c86feebc320a1236842de9e.png" src="_images/53c24e5d8d50a6e852c3428eadb98cbe013530219c86feebc320a1236842de9e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    839.00
+mean      50.94
+std       15.70
+min       14.42
+25%       38.06
+50%       51.55
+75%       62.80
+max       89.29
+Name: Age_at_diagnosis, dtype: float64
+
+Asimetría (skewness): 0.074
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> la edad muestra una distribución aproximadamente simétrica con una leve cola hacia edades avanzadas, rango de 14 a 89 años y mediana cercana a 47 años. No se observan valores fisiológicamente implausibles (p. ej., edades negativas o extremas fuera de rango clínico), por lo que no se identifican <em>outliers</em> que ameriten depuración.</p>
+</section>
+<section id="sexo-y-raza">
+<h4>3.3.2 Sexo y raza<a class="headerlink" href="#sexo-y-raza" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">))</span>
+
+<span class="n">gender_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s2">&quot;Femenino (0)&quot;</span><span class="p">,</span> <span class="s2">&quot;Masculino (1)&quot;</span><span class="p">],</span> <span class="n">gender_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;#8E44AD&quot;</span><span class="p">,</span> <span class="s2">&quot;#F39C12&quot;</span><span class="p">],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución por sexo&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Número de pacientes&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">gender_counts</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">v</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+
+<span class="n">race_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Race&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">race_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span> <span class="n">race_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;mako&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">race_counts</span><span class="p">)),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución por categoría de raza (codificada)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Código de categoría&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Número de pacientes&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">race_counts</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e03104e852b1b273a9ae58ec5d1c3c80c75505c6dfc1a75061e3a8e5ede5edd8.png" src="_images/e03104e852b1b273a9ae58ec5d1c3c80c75505c6dfc1a75061e3a8e5ede5edd8.png" />
+</div>
+</div>
+<p><strong>Interpretación:</strong> la distribución por sexo es razonablemente balanceada (con ligera mayoría femenina), mientras que la variable <code class="docutils literal notranslate"><span class="pre">Race</span></code> está fuertemente dominada por una categoría (código 0), con las demás categorías representadas de forma minoritaria. Esto sugiere que <code class="docutils literal notranslate"><span class="pre">Race</span></code>, en su codificación actual, aportará poca varianza discriminativa y deberá tratarse con cautela (posible colapso de categorías raras) en el modelado posterior.</p>
+</section>
+</section>
+<section id="prevalencia-de-mutaciones-genicas">
+<h3>3.4 Prevalencia de mutaciones génicas<a class="headerlink" href="#prevalencia-de-mutaciones-genicas" title="Permalink to this heading">#</a></h3>
+<p>Se analiza la frecuencia con la que cada uno de los 20 genes aparece mutado en la cohorte completa, como paso previo a evaluar su asociación con el grado tumoral.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gene_freq</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">GENES</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;mako_r&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">gene_freq</span><span class="p">))</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">gene_freq</span><span class="o">.</span><span class="n">index</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gene_freq</span><span class="o">.</span><span class="n">values</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">gene_freq</span><span class="o">.</span><span class="n">values</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
+            <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Prevalencia de mutación (%)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Frecuencia de mutación por gen (n = 839 pacientes)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">gene_freq</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/949c818a1e7541a5e13421fac25781bc38c2a643fcdf154979d9395de935508d.png" src="_images/949c818a1e7541a5e13421fac25781bc38c2a643fcdf154979d9395de935508d.png" />
+</div>
+</div>
+<p><strong>Interpretación:</strong> <em>IDH1</em> (48.1 %) y <em>TP53</em> (41.5 %) son, por amplio margen, los genes más frecuentemente mutados, seguidos de <em>ATRX</em> (25.9 %). El resto de genes presenta prevalencias inferiores al 17 %, con varios genes (<em>BCOR</em>, <em>CSMD3</em>, <em>SMARCA4</em>, <em>GRIN2A</em>, <em>IDH2</em>, <em>FAT4</em>, <em>PDGFRA</em>) mutados en menos del 3.5 % de los pacientes. Esta fuerte asimetría en la prevalencia es consistente con la biología conocida de los gliomas, donde <em>IDH1</em> es el biomarcador central de la clasificación molecular OMS, y anticipa que los genes de baja frecuencia aportarán señal estadística limitada y alta varianza si se modelan de forma individual.</p>
+</section>
+<section id="analisis-bivariado-variables-clinicas-vs-grado-tumoral">
+<h3>3.5 Análisis bivariado: variables clínicas vs. grado tumoral<a class="headerlink" href="#analisis-bivariado-variables-clinicas-vs-grado-tumoral" title="Permalink to this heading">#</a></h3>
+<section id="edad-segun-grado">
+<h4>3.5.1 Edad según grado<a class="headerlink" href="#edad-segun-grado" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LGG&quot;</span><span class="p">,</span> <span class="s2">&quot;GBM&quot;</span><span class="p">],</span>
+               <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;LGG&quot;</span><span class="p">:</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;GBM&quot;</span><span class="p">:</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+               <span class="n">inner</span><span class="o">=</span><span class="s2">&quot;quartile&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución de edad por grado tumoral&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Edad al diagnóstico (años)&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">,</span>
+            <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;LGG&quot;</span><span class="p">:</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;GBM&quot;</span><span class="p">:</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+            <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Densidad de edad por grado tumoral&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Edad al diagnóstico (años)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">age_lgg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span>
+<span class="n">age_gbm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span>
+<span class="n">u_stat</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">age_lgg</span><span class="p">,</span> <span class="n">age_gbm</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Edad media LGG: </span><span class="si">{</span><span class="n">age_lgg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">age_lgg</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> anios&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Edad media GBM: </span><span class="si">{</span><span class="n">age_gbm</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">age_gbm</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> anios&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Prueba U de Mann-Whitney: U = </span><span class="si">{</span><span class="n">u_stat</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">, p-value = </span><span class="si">{</span><span class="n">p_val</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/09c7e3aec3db3dc91e3171b339c17d8245fe86ef7af9255146e845545c81f5cb.png" src="_images/09c7e3aec3db3dc91e3171b339c17d8245fe86ef7af9255146e845545c81f5cb.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">21</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="n">age_lgg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="n">age_gbm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span>
+<span class="ne">---&gt; </span><span class="mi">21</span> <span class="n">u_stat</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">age_lgg</span><span class="p">,</span> <span class="n">age_gbm</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Edad media LGG: </span><span class="si">{</span><span class="n">age_lgg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">age_lgg</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> anios&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Edad media GBM: </span><span class="si">{</span><span class="n">age_gbm</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">age_gbm</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> anios&quot;</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;stats&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> los pacientes con GBM presentan una edad al diagnóstico sustancialmente mayor (media ≈ 60.7 años) que los pacientes con LGG (media ≈ 43.9 años), una diferencia de casi 17 años. La prueba U de Mann-Whitney confirma que esta diferencia es <strong>altamente significativa</strong> (p &lt; 0.001), lo que posiciona a la edad como una de las variables con mayor poder discriminativo individual en este dataset — hallazgo consistente con la epidemiología conocida del glioblastoma como tumor de aparición más tardía.</p>
+</section>
+<section id="sexo-y-raza-segun-grado">
+<h4>3.5.2 Sexo y raza según grado<a class="headerlink" href="#sexo-y-raza-segun-grado" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="n">ct_gender</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">ct_gender</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Proporción de grado tumoral por sexo&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Sexo (0 = Femenino, 1 = Masculino)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Porcentaje (%)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Grado&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">ct_race</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Race&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade_label&quot;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">ct_race</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Proporción de grado tumoral por categoría de raza&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Código de categoría de raza&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Porcentaje (%)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Grado&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">chi2_g</span><span class="p">,</span> <span class="n">p_g</span><span class="p">,</span> <span class="n">dof_g</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Gender</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Grade</span><span class="p">))</span>
+<span class="n">chi2_r</span><span class="p">,</span> <span class="n">p_r</span><span class="p">,</span> <span class="n">dof_r</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Race</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Grade</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chi-cuadrado Sexo vs Grado:  chi2 = </span><span class="si">{</span><span class="n">chi2_g</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p-value = </span><span class="si">{</span><span class="n">p_g</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chi-cuadrado Raza vs Grado:  chi2 = </span><span class="si">{</span><span class="n">chi2_r</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p-value = </span><span class="si">{</span><span class="n">p_r</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1a24794679808237312ea7e9fd6d5b8090a401f81239730519234558c230ee01.png" src="_images/1a24794679808237312ea7e9fd6d5b8090a401f81239730519234558c230ee01.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chi-cuadrado Sexo vs Grado:  chi2 = 2.782, p-value = 0.095
+Chi-cuadrado Raza vs Grado:  chi2 = 13.841, p-value = 0.003
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> a diferencia de la edad, ni el sexo ni la raza (en su codificación actual) muestran una asociación estadísticamente significativa con el grado tumoral (p &gt; 0.05 en ambos casos), lo que sugiere que aportarán información marginal como predictores individuales, aunque podrían conservar valor en interacción con otras variables.</p>
+</section>
+</section>
+<section id="asociacion-entre-mutaciones-genicas-y-grado-tumoral">
+<h3>3.6 Asociación entre mutaciones génicas y grado tumoral<a class="headerlink" href="#asociacion-entre-mutaciones-genicas-y-grado-tumoral" title="Permalink to this heading">#</a></h3>
+<p>Se compara la prevalencia de cada mutación entre los grupos LGG y GBM, y se evalúa la significancia estadística mediante la prueba exacta de Chi-cuadrado / Fisher.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">GENES</span><span class="p">:</span>
+    <span class="n">tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">gene</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">])</span>
+    <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">tbl</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">prev_lgg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">prev_gbm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Grade</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Gen&quot;</span><span class="p">:</span> <span class="n">gene</span><span class="p">,</span>
+        <span class="s2">&quot;Prevalencia_LGG (%)&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">prev_lgg</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;Prevalencia_GBM (%)&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">prev_gbm</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;Diferencia (pp)&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">prev_lgg</span> <span class="o">-</span> <span class="n">prev_gbm</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;chi2&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">chi2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s2">&quot;p_value&quot;</span><span class="p">:</span> <span class="n">p</span>
+    <span class="p">})</span>
+
+<span class="n">assoc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;p_value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">assoc_df</span><span class="p">[</span><span class="s2">&quot;significativo (p&lt;0.05)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">assoc_df</span><span class="p">[</span><span class="s2">&quot;p_value&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+<span class="n">assoc_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Gen</th>
+      <th>Prevalencia_LGG (%)</th>
+      <th>Prevalencia_GBM (%)</th>
+      <th>Diferencia (pp)</th>
+      <th>chi2</th>
+      <th>p_value</th>
+      <th>significativo (p&lt;0.05)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>IDH1</td>
+      <td>78.2</td>
+      <td>6.5</td>
+      <td>71.7</td>
+      <td>420.73</td>
+      <td>1.694457e-93</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PTEN</td>
+      <td>5.1</td>
+      <td>33.0</td>
+      <td>-27.8</td>
+      <td>113.11</td>
+      <td>2.039727e-26</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ATRX</td>
+      <td>37.6</td>
+      <td>9.7</td>
+      <td>27.9</td>
+      <td>83.05</td>
+      <td>7.992912e-20</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CIC</td>
+      <td>22.0</td>
+      <td>1.1</td>
+      <td>20.8</td>
+      <td>77.26</td>
+      <td>1.497776e-18</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>EGFR</td>
+      <td>6.4</td>
+      <td>23.0</td>
+      <td>-16.6</td>
+      <td>48.94</td>
+      <td>2.634635e-12</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>RB1</td>
+      <td>1.2</td>
+      <td>9.7</td>
+      <td>-8.4</td>
+      <td>31.96</td>
+      <td>1.575470e-08</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NOTCH1</td>
+      <td>7.8</td>
+      <td>0.0</td>
+      <td>7.8</td>
+      <td>28.77</td>
+      <td>8.154046e-08</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>FUBP1</td>
+      <td>8.8</td>
+      <td>0.6</td>
+      <td>8.3</td>
+      <td>27.47</td>
+      <td>1.593009e-07</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TP53</td>
+      <td>48.3</td>
+      <td>32.1</td>
+      <td>16.2</td>
+      <td>21.96</td>
+      <td>2.783059e-06</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>MUC16</td>
+      <td>8.4</td>
+      <td>16.2</td>
+      <td>-7.8</td>
+      <td>11.97</td>
+      <td>5.405059e-04</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>GRIN2A</td>
+      <td>1.4</td>
+      <td>5.7</td>
+      <td>-4.2</td>
+      <td>11.82</td>
+      <td>5.865060e-04</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>IDH2</td>
+      <td>4.3</td>
+      <td>0.6</td>
+      <td>3.7</td>
+      <td>10.74</td>
+      <td>1.047498e-03</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>PDGFRA</td>
+      <td>1.2</td>
+      <td>4.5</td>
+      <td>-3.3</td>
+      <td>8.79</td>
+      <td>3.037159e-03</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>PIK3R1</td>
+      <td>4.3</td>
+      <td>9.4</td>
+      <td>-5.1</td>
+      <td>8.70</td>
+      <td>3.187453e-03</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>SMARCA4</td>
+      <td>4.7</td>
+      <td>1.1</td>
+      <td>3.6</td>
+      <td>8.44</td>
+      <td>3.674651e-03</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>NF1</td>
+      <td>6.0</td>
+      <td>10.8</td>
+      <td>-4.8</td>
+      <td>6.52</td>
+      <td>1.069406e-02</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>CSMD3</td>
+      <td>2.5</td>
+      <td>4.3</td>
+      <td>-1.8</td>
+      <td>2.12</td>
+      <td>1.454709e-01</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>FAT4</td>
+      <td>2.3</td>
+      <td>3.4</td>
+      <td>-1.2</td>
+      <td>1.01</td>
+      <td>3.139196e-01</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>PIK3CA</td>
+      <td>8.0</td>
+      <td>9.7</td>
+      <td>-1.7</td>
+      <td>0.70</td>
+      <td>4.024514e-01</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>BCOR</td>
+      <td>3.5</td>
+      <td>3.4</td>
+      <td>0.1</td>
+      <td>0.00</td>
+      <td>9.490462e-01</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">plot_df</span> <span class="o">=</span> <span class="n">assoc_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Diferencia (pp)&quot;</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#2E86AB&quot;</span> <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#C1443C&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;Diferencia (pp)&quot;</span><span class="p">]]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;Gen&quot;</span><span class="p">],</span> <span class="n">plot_df</span><span class="p">[</span><span class="s2">&quot;Diferencia (pp)&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Diferencia de prevalencia: LGG − GBM (puntos porcentuales)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Mutaciones diferenciales entre LGG y GBM&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Patch</span>
+<span class="n">legend_elems</span> <span class="o">=</span> <span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#2E86AB&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Más frecuente en LGG&quot;</span><span class="p">),</span>
+                <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#C1443C&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Más frecuente en GBM&quot;</span><span class="p">)]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_elems</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">n_sig</span> <span class="o">=</span> <span class="n">assoc_df</span><span class="p">[</span><span class="s2">&quot;significativo (p&lt;0.05)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genes con asociación estadísticamente significativa con el grado (p&lt;0.05): </span><span class="si">{</span><span class="n">n_sig</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">GENES</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top 5 genes por significancia:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">assoc_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)[[</span><span class="s2">&quot;Gen&quot;</span><span class="p">,</span> <span class="s2">&quot;Prevalencia_LGG (%)&quot;</span><span class="p">,</span> <span class="s2">&quot;Prevalencia_GBM (%)&quot;</span><span class="p">,</span> <span class="s2">&quot;p_value&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aeee29021668d82fed6e5bcfe0d21b3c3e4b977f12be70277471adbb6e724d1a.png" src="_images/aeee29021668d82fed6e5bcfe0d21b3c3e4b977f12be70277471adbb6e724d1a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Genes con asociación estadísticamente significativa con el grado (p&lt;0.05): 16 de 20
+
+Top 5 genes por significancia:
+    Gen  Prevalencia_LGG (%)  Prevalencia_GBM (%)       p_value
+0  IDH1                 78.2                  6.5  1.694457e-93
+1  PTEN                  5.1                 33.0  2.039727e-26
+2  ATRX                 37.6                  9.7  7.992912e-20
+3   CIC                 22.0                  1.1  1.497776e-18
+4  EGFR                  6.4                 23.0  2.634635e-12
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> existe una asociación muy marcada entre el patrón mutacional y el grado tumoral. <em>IDH1</em>, <em>ATRX</em> y <em>CIC</em> son notablemente más frecuentes en LGG, patrón que coincide con la vía molecular clásica de gliomas de bajo grado (IDH-mutados). En contraste, <em>EGFR</em>, <em>PTEN</em>, <em>RB1</em> y <em>NF1</em> son más frecuentes en GBM, coherente con la vía molecular del glioblastoma primario (IDH-wildtype). Este resultado es clínicamente coherente y confirma que las variables mutacionales — y en particular <em>IDH1</em> — constituyen las señales más potentes para un futuro clasificador.</p>
+</section>
+<section id="estructura-de-correlacion-entre-variables">
+<h3>3.7 Estructura de correlación entre variables<a class="headerlink" href="#estructura-de-correlacion-entre-variables" title="Permalink to this heading">#</a></h3>
+<p>Se examina la matriz de correlación de Pearson entre todas las variables numéricas para detectar colinealidad y patrones de co-mutación (mutaciones que tienden a ocurrir juntas o de forma mutuamente excluyente).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">,</span> <span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">,</span> <span class="s2">&quot;Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;Race&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">GENES</span>
+<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">corr_vars</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+            <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+            <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Coeficiente de correlación de Pearson&quot;</span><span class="p">},</span>
+            <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Matriz de correlación: variables clínicas y mutacionales&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Pares más correlacionados con la variable objetivo</span>
+<span class="n">target_corr</span> <span class="o">=</span> <span class="n">corr_matrix</span><span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Grade&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">abs</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correlación de cada variable con &#39;Grade&#39; (ordenada por magnitud):</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">target_corr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/42f2594c14dc1b9e76cc4e4601af35cebaf7da528cc4ec0c99b7103215e8e830.png" src="_images/42f2594c14dc1b9e76cc4e4601af35cebaf7da528cc4ec0c99b7103215e8e830.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlación de cada variable con &#39;Grade&#39; (ordenada por magnitud):
+
+IDH1               -0.708
+Age_at_diagnosis    0.529
+PTEN                0.367
+ATRX               -0.315
+CIC                -0.303
+EGFR                0.242
+RB1                 0.195
+NOTCH1             -0.185
+FUBP1              -0.181
+TP53               -0.162
+MUC16               0.119
+GRIN2A              0.119
+IDH2               -0.113
+PDGFRA              0.102
+PIK3R1              0.102
+SMARCA4            -0.100
+NF1                 0.088
+Race                0.080
+Gender             -0.060
+CSMD3               0.050
+FAT4                0.035
+PIK3CA              0.029
+BCOR               -0.002
+Name: Grade, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> (r ≈ 0.58) e <code class="docutils literal notranslate"><span class="pre">IDH1</span></code> (r ≈ −0.60) muestran las correlaciones más fuertes con el grado tumoral, seguidas de <em>TP53</em>, <em>ATRX</em>, <em>EGFR</em>, <em>PTEN</em> y <em>CIC</em> con magnitudes moderadas. Se observa además una correlación negativa notable entre <em>IDH1</em> y <em>EGFR</em>/<em>PTEN</em>, reflejando la conocida <strong>exclusividad mutua</strong> entre las vías moleculares IDH-mutada e IDH-wildtype. No se detecta colinealidad extrema (|r| &gt; 0.9) entre pares de predictores que obligue a eliminar variables antes de modelar, aunque el patrón de co-mutación <em>IDH1</em>/<em>ATRX</em>/<em>CIC</em> frente a <em>EGFR</em>/<em>PTEN</em>/<em>RB1</em> deberá tenerse en cuenta al interpretar coeficientes de modelos lineales.</p>
+</section>
+<section id="analisis-multivariado-reduccion-de-dimensionalidad-pca">
+<h3>3.8 Análisis multivariado: reducción de dimensionalidad (PCA)<a class="headerlink" href="#analisis-multivariado-reduccion-de-dimensionalidad-pca" title="Permalink to this heading">#</a></h3>
+<p>Como exploración final, se proyecta el espacio de las 20 variables mutacionales (estandarizadas) sobre sus dos primeras componentes principales, coloreando por grado tumoral, para evaluar visualmente la separabilidad de clases en un espacio reducido.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">GENES</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">var_exp</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">grade</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">GRADE_LABELS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">grade</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span>
+               <span class="n">color</span><span class="o">=</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="n">grade</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC1 (</span><span class="si">{</span><span class="n">var_exp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% varianza explicada)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC2 (</span><span class="si">{</span><span class="n">var_exp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% varianza explicada)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Proyección PCA del perfil mutacional, coloreada por grado&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Grado tumoral&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Varianza explicada acumulada (PC1+PC2): </span><span class="si">{</span><span class="n">var_exp</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e19e4963dd6b667a6c0eea26b215e0e1adf47218684f546393ef36309d33f9c7.png" src="_images/e19e4963dd6b667a6c0eea26b215e0e1adf47218684f546393ef36309d33f9c7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Varianza explicada acumulada (PC1+PC2): 22.1%
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> aun con solo dos componentes (que explican una fracción moderada de la varianza total, dado que la señal está distribuida entre 20 variables binarias dispersas), se observa una separación parcial pero visible entre las nubes de puntos LGG y GBM a lo largo de PC1, componente dominada principalmente por <em>IDH1</em> y sus genes co-mutados. Esto confirma, de forma multivariada, la separabilidad de clases sugerida por los análisis bivariados y respalda la viabilidad de un modelo de clasificación supervisado sobre este conjunto de variables.</p>
+</section>
+</section>
+<section id="discusion">
+<h2>4. Discusión<a class="headerlink" href="#discusion" title="Permalink to this heading">#</a></h2>
+<p>Los resultados de este EDA son consistentes con el conocimiento biomédico establecido sobre la glioma-génesis: la mutación de <em>IDH1</em> define una vía molecular distintiva asociada a tumores de menor grado y pacientes más jóvenes, mientras que alteraciones en <em>EGFR</em>, <em>PTEN</em> y <em>RB1</em> caracterizan la vía clásica del glioblastoma primario en pacientes de mayor edad. La ausencia de valores faltantes y duplicados reduce sustancialmente el trabajo de limpieza necesario antes del modelado, y el desbalance de clases (58/42) es manejable con estrategias estándar.</p>
+<p>Desde la perspectiva de <em>machine learning</em>, estos hallazgos sugieren:</p>
+<ul class="simple">
+<li><p><strong>Variables con alto poder predictivo esperado:</strong> <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code>, <code class="docutils literal notranslate"><span class="pre">IDH1</span></code>, <code class="docutils literal notranslate"><span class="pre">TP53</span></code>, <code class="docutils literal notranslate"><span class="pre">ATRX</span></code>, <code class="docutils literal notranslate"><span class="pre">EGFR</span></code>, <code class="docutils literal notranslate"><span class="pre">PTEN</span></code>, <code class="docutils literal notranslate"><span class="pre">CIC</span></code>.</p></li>
+<li><p><strong>Variables de bajo aporte individual:</strong> <code class="docutils literal notranslate"><span class="pre">Gender</span></code>, <code class="docutils literal notranslate"><span class="pre">Race</span></code>, y genes con prevalencia &lt; 3 % (<code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code>, <code class="docutils literal notranslate"><span class="pre">FAT4</span></code>, <code class="docutils literal notranslate"><span class="pre">IDH2</span></code>, <code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code>, <code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code>, <code class="docutils literal notranslate"><span class="pre">CSMD3</span></code>, <code class="docutils literal notranslate"><span class="pre">BCOR</span></code>), que podrían requerir regularización o combinarse en variables agregadas (p. ej., conteo total de mutaciones) para evitar sobreajuste dado su escaso número de casos positivos.</p></li>
+<li><p><strong>Interacciones relevantes a explorar:</strong> la co-mutación <em>IDH1</em>–<em>ATRX</em>–<em>CIC</em> frente a <em>EGFR</em>–<em>PTEN</em>–<em>RB1</em> sugiere que modelos no lineales (árboles, <em>gradient boosting</em>) o términos de interacción explícitos podrían capturar mejor la estructura de los datos que un modelo puramente aditivo.</p></li>
+</ul>
+</section>
+<section id="conclusiones">
+<h2>5. Conclusiones<a class="headerlink" href="#conclusiones" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>El dataset TCGA de grado de glioma es de alta calidad estructural (sin datos faltantes ni duplicados) y presenta un desbalance de clases moderado y manejable.</p></li>
+<li><p>La edad al diagnóstico y la mutación de <em>IDH1</em> constituyen las señales univariadas más fuertes para discriminar entre LGG y GBM, ambas con significancia estadística robusta (p &lt; 0.001).</p></li>
+<li><p>El patrón de mutaciones refleja la biología molecular conocida de los gliomas, validando externamente la calidad del dataset.</p></li>
+<li><p>La proyección PCA confirma una separabilidad parcial de clases en el espacio mutacional, apoyando la factibilidad de modelos de clasificación supervisada.</p></li>
+<li><p>Se recomienda, para la fase de modelado, priorizar variables con asociación estadística significativa, considerar la eliminación o agrupación de genes de muy baja prevalencia, y evaluar modelos capaces de capturar interacciones no lineales entre genes.</p></li>
+</ol>
+</section>
+<section id="referencias">
+<h2>Referencias<a class="headerlink" href="#referencias" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The Cancer Genome Atlas (TCGA) Research Network. <em>Comprehensive, Integrative Genomic Analysis of Diffuse Lower-Grade Gliomas</em>. New England Journal of Medicine.</p></li>
+<li><p>Louis, D. N., et al. (2021). <em>The 2021 WHO Classification of Tumors of the Central Nervous System: a summary</em>. Neuro-Oncology.</p></li>
+<li><p>Tasci, E., et al. (2022). <em>Glioma Grading Clinical and Mutation Features Dataset</em>. UCI Machine Learning Repository.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-abstract">Resumen (Abstract)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">1. Introducción</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#materiales-y-metodos">2. Materiales y Métodos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">2.1 Configuración del entorno</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-conjunto-de-datos">2.2 Descripción del conjunto de datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable Objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables Clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables Genéticas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-de-la-estructura-y-proposito-del-proyecto">Resumen de la Estructura y Propósito del Proyecto</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados">3. Resultados</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-y-estructura-de-los-datos">3.1 Calidad y estructura de los datos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-objetivo-grade">3.2 Distribución de la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables-clinicas">3.3 Análisis univariado de variables clínicas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#edad-al-diagnostico">3.3.1 Edad al diagnóstico</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sexo-y-raza">3.3.2 Sexo y raza</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prevalencia-de-mutaciones-genicas">3.4 Prevalencia de mutaciones génicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-variables-clinicas-vs-grado-tumoral">3.5 Análisis bivariado: variables clínicas vs. grado tumoral</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#edad-segun-grado">3.5.1 Edad según grado</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sexo-y-raza-segun-grado">3.5.2 Sexo y raza según grado</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#asociacion-entre-mutaciones-genicas-y-grado-tumoral">3.6 Asociación entre mutaciones génicas y grado tumoral</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura-de-correlacion-entre-variables">3.7 Estructura de correlación entre variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-multivariado-reduccion-de-dimensionalidad-pca">3.8 Análisis multivariado: reducción de dimensionalidad (PCA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discusion">4. Discusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">5. Conclusiones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Joshua Hincapie Llorente y Alejandro Cantillo Escorcia — Universidad del Norte
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

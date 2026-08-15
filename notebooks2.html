@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Análisis Exploratorio de Datos (EDA) &#8212; Características clínicas y de mutación de la graduación del glioma - Visualización de Datos 202630</title>
+    <title>Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM) &#8212; Características clínicas y de mutación de la graduación del glioma - Visualización de Datos 202630</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks2';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026" href="intro.html" />
+    <link rel="prev" title="Caracterización Clínico-Molecular del Grado Tumoral en Gliomas - Visualización de Datos 2026" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -153,12 +153,12 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026
+                    Caracterización Clínico-Molecular del Grado Tumoral en Gliomas - Visualización de Datos 2026
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Análisis Exploratorio de Datos (EDA)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM)</a></li>
 </ul>
 
     </div>
@@ -342,7 +342,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Análisis Exploratorio de Datos (EDA)</h1>
+    <h1>Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -352,15 +352,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto-de-los-datos">Contexto de los datos</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable objetivo</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable Objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables Clínicas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables genéticas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes">Datos faltantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset-protocolo-anti-leakage">División del dataset - Protocolo Anti-Leakage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a><ul class="nav section-nav flex-column">
@@ -369,6 +371,7 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">Análisis Bivariado</a></li>
 </ul>
             </nav>
         </div>
@@ -380,10 +383,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="analisis-exploratorio-de-datos-eda">
-<h1>Análisis Exploratorio de Datos (EDA)<a class="headerlink" href="#analisis-exploratorio-de-datos-eda" title="Permalink to this heading">#</a></h1>
-<section id="contexto-de-los-datos">
-<h2>Contexto de los datos<a class="headerlink" href="#contexto-de-los-datos" title="Permalink to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-exploratorio-de-variables-clinicas-y-mutacionales-asociadas-a-la-clasificacion-histologica-lgg-vs-gbm">
+<h1>Análisis exploratorio de variables clínicas y mutacionales asociadas a la clasificación histológica (LGG vs. GBM)<a class="headerlink" href="#analisis-exploratorio-de-variables-clinicas-y-mutacionales-asociadas-a-la-clasificacion-histologica-lgg-vs-gbm" title="Permalink to this heading">#</a></h1>
+<section id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading">#</a></h2>
 <p>El conjunto de datos utilizado para el análisis es <code class="docutils literal notranslate"><span class="pre">TCGA_InfoWithGrade.csv</span></code>,
 correspondiente a una versión preprocesada de los datos relacionados con
 gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
@@ -393,14 +396,40 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mticker</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span><span class="p">,</span> <span class="n">ttest_ind</span>
 
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;notebook&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+    <span class="s2">&quot;savefig.dpi&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s2">&quot;font.family&quot;</span><span class="p">:</span> <span class="s2">&quot;DejaVu Sans&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.titlesize&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="s2">&quot;axes.titleweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.labelsize&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s2">&quot;axes.edgecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;0.3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;axes.grid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;grid.alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;legend.frameon&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;figure.facecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+<span class="p">})</span>
 
+<span class="c1"># Paleta institucional: dos tonos para LGG (0) vs GBM (1)</span>
+<span class="n">PALETTE_GRADE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;#2E86AB&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;#C1443C&quot;</span><span class="p">}</span>
+<span class="n">PALETTE_SEQ</span>   <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;mako&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="n">df_mutations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/joshu/OneDrive/Escritorio/dataviz/dataviz_2026/TCGA_GBM_LGG_Mutations_all.csv&quot;</span><span class="p">)</span>
-<span class="n">df_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/joshu/OneDrive/Escritorio/dataviz/dataviz_2026/TCGA_InfoWithGrade.csv&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.width&quot;</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
 
-<span class="c1">#df_mutations.head()</span>
-<span class="n">df_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;TCGA_InfoWithGrade.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -433,7 +462,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <th>PTEN</th>
       <th>EGFR</th>
       <th>CIC</th>
-      <th>...</th>
+      <th>MUC16</th>
+      <th>PIK3CA</th>
+      <th>NF1</th>
+      <th>PIK3R1</th>
       <th>FUBP1</th>
       <th>RB1</th>
       <th>NOTCH1</th>
@@ -459,7 +491,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
@@ -483,7 +518,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -507,7 +545,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -531,7 +572,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -555,7 +599,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -569,12 +616,11 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 24 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_info</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -607,7 +653,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <th>PTEN</th>
       <th>EGFR</th>
       <th>CIC</th>
-      <th>...</th>
+      <th>MUC16</th>
+      <th>PIK3CA</th>
+      <th>NF1</th>
+      <th>PIK3R1</th>
       <th>FUBP1</th>
       <th>RB1</th>
       <th>NOTCH1</th>
@@ -622,150 +671,6 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      <td>51.30</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>0</td>
-      <td>38.72</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>0</td>
-      <td>35.17</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0</td>
-      <td>1</td>
-      <td>32.78</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>0</td>
-      <td>31.51</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
       <th>834</th>
       <td>1</td>
       <td>1</td>
@@ -777,7 +682,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -801,7 +709,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -825,7 +736,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -849,7 +763,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
@@ -873,7 +790,10 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -887,168 +807,445 @@ gliomas del proyecto The Cancer Genome Atlas (TCGA).</p>
     </tr>
   </tbody>
 </table>
-<p>839 rows × 24 columns</p>
 </div></div></div>
 </div>
+<section id="estructura">
+<h3>Estructura<a class="headerlink" href="#estructura" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">info_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Tipo de dato&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+    <span class="s2">&quot;Valores no nulos&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Valores nulos&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Valores únicos&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensiones del dataset: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> pacientes x </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> variables&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registros duplicados: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valores faltantes: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">info_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensiones del dataset: 839 pacientes x 24 variables
+Registros duplicados: 1
+Valores faltantes: 0
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Tipo de dato</th>
+      <th>Valores no nulos</th>
+      <th>Valores nulos</th>
+      <th>Valores únicos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Grade</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Age_at_diagnosis</th>
+      <td>float64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>Race</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>IDH1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>TP53</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>ATRX</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PTEN</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>EGFR</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>CIC</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>MUC16</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PIK3CA</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>NF1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PIK3R1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>FUBP1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>RB1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>NOTCH1</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>BCOR</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>CSMD3</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>SMARCA4</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>GRIN2A</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>IDH2</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>FAT4</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>PDGFRA</th>
+      <td>int64</td>
+      <td>839</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columnas_categoricas</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">([</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="n">columnas_categoricas</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">columnas_categoricas</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Tipo&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="p">})</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Grade</th>
+      <th>Gender</th>
+      <th>Age_at_diagnosis</th>
+      <th>Race</th>
+      <th>IDH1</th>
+      <th>TP53</th>
+      <th>ATRX</th>
+      <th>PTEN</th>
+      <th>EGFR</th>
+      <th>CIC</th>
+      <th>MUC16</th>
+      <th>PIK3CA</th>
+      <th>NF1</th>
+      <th>PIK3R1</th>
+      <th>FUBP1</th>
+      <th>RB1</th>
+      <th>NOTCH1</th>
+      <th>BCOR</th>
+      <th>CSMD3</th>
+      <th>SMARCA4</th>
+      <th>GRIN2A</th>
+      <th>IDH2</th>
+      <th>FAT4</th>
+      <th>PDGFRA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Tipo</th>
+      <td>category</td>
+      <td>category</td>
+      <td>float64</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+      <td>category</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El conjunto de datos presenta una estructura limpia y estructurada, compuesta por <strong>839 registros</strong> (pacientes) y <strong>24 variables</strong>, sin presencia de valores nulos o faltantes. Aunque se presente un registro duplicado representa a dos pacientes distintos que casualmente comparten el mismo fenotipo y perfil genético, ya que su ID es distinto en el dataset original. Las variables binarias, originalmente codificadas mediante valores enteros <code class="docutils literal notranslate"><span class="pre">0</span></code> y <code class="docutils literal notranslate"><span class="pre">1</span></code>, fueron transformadas al tipo categórico (<code class="docutils literal notranslate"><span class="pre">category</span></code>) para representar adecuadamente su naturaleza y facilitar su análisis exploratorio.</p>
+</section>
+</section>
+<section id="contexto-de-los-datos">
+<h2>Contexto de los datos<a class="headerlink" href="#contexto-de-los-datos" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Categoría</p></th>
+<th class="head"><p>Variables</p></th>
+<th class="head"><p>Codificación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Variable objetivo</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Grade</span></code></p></td>
+<td><p>0 = LGG (glioma de bajo grado), 1 = GBM (glioblastoma)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Demográficas</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Gender</span></code>, <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code>, <code class="docutils literal notranslate"><span class="pre">Race</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Gender</span></code>: 0/1; <code class="docutils literal notranslate"><span class="pre">Race</span></code>: 0–3 (categorías étnicas codificadas); <code class="docutils literal notranslate"><span class="pre">Age</span></code>: continua (años)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Mutacionales</strong></p></td>
+<td><p>20 genes (<code class="docutils literal notranslate"><span class="pre">IDH1</span></code>, <code class="docutils literal notranslate"><span class="pre">TP53</span></code>, <code class="docutils literal notranslate"><span class="pre">ATRX</span></code>, <code class="docutils literal notranslate"><span class="pre">PTEN</span></code>, <code class="docutils literal notranslate"><span class="pre">EGFR</span></code>, <code class="docutils literal notranslate"><span class="pre">CIC</span></code>, <code class="docutils literal notranslate"><span class="pre">MUC16</span></code>, <code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code>, <code class="docutils literal notranslate"><span class="pre">NF1</span></code>, <code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code>, <code class="docutils literal notranslate"><span class="pre">FUBP1</span></code>, <code class="docutils literal notranslate"><span class="pre">RB1</span></code>, <code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code>, <code class="docutils literal notranslate"><span class="pre">BCOR</span></code>, <code class="docutils literal notranslate"><span class="pre">CSMD3</span></code>, <code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code>, <code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code>, <code class="docutils literal notranslate"><span class="pre">IDH2</span></code>, <code class="docutils literal notranslate"><span class="pre">FAT4</span></code>, <code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code>)</p></td>
+<td><p>0 = no mutado, 1 = mutado</p></td>
+</tr>
+</tbody>
+</table>
 <section id="variable-objetivo">
-<h3>Variable objetivo<a class="headerlink" href="#variable-objetivo" title="Permalink to this heading">#</a></h3>
+<h3>Variable Objetivo<a class="headerlink" href="#variable-objetivo" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">Grade</span></code></strong>: indica el grado del glioma. Esta variable distingue entre
-los dos grupos principales presentes en el conjunto de datos:
-<code class="docutils literal notranslate"><span class="pre">LGG</span></code> (<em>Low-Grade Glioma</em>) y <code class="docutils literal notranslate"><span class="pre">GBM</span></code> (<em>Glioblastoma Multiforme</em>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Grade</span></code></strong>: Indica el grado del glioma (0 = <code class="docutils literal notranslate"><span class="pre">LGG</span></code>, 1 = <code class="docutils literal notranslate"><span class="pre">GBM</span></code>). Esta variable distingue entre los dos grupos principales del conjunto de datos: Glioma de Bajo Grado (<em>Low-Grade Glioma</em>) y Glioblastoma Multiforme (<em>Glioblastoma Multiforme</em>).</p></li>
 </ul>
 </section>
+<hr class="docutils" />
 <section id="variables-clinicas">
-<h3>Variables clínicas<a class="headerlink" href="#variables-clinicas" title="Permalink to this heading">#</a></h3>
-<p>Las variables clínicas proporcionan información sobre las características
-demográficas de los pacientes:</p>
+<h3>Variables Clínicas<a class="headerlink" href="#variables-clinicas" title="Permalink to this heading">#</a></h3>
+<p>Proporcionan información sobre las características demográficas de los pacientes:</p>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">Gender</span></code></strong>: género del paciente.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></strong>: edad del paciente al momento del diagnóstico.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">Race</span></code></strong>: raza reportada del paciente.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Gender</span></code></strong>: Género del paciente (0 = masculino, 1 = femenino).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></strong>: Edad del paciente al momento del diagnóstico expresada en años (numérica continua). La parte decimal incorpora la información exacta de los días transcurridos.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Race</span></code></strong>: Raza reportada del paciente codificada del 0 al 3 (0 = <em>White</em>, 1 = <em>Black or African American</em>, 2 = <em>Asian</em>, 3 = <em>American Indian or Alaska Native</em>).</p></li>
 </ul>
 </section>
+<hr class="docutils" />
 <section id="variables-geneticas">
 <h3>Variables genéticas<a class="headerlink" href="#variables-geneticas" title="Permalink to this heading">#</a></h3>
 <p>El conjunto de datos también contiene variables correspondientes a
 diferentes genes. Estas variables están codificadas de forma binaria,
 indicando con un valor de <strong>1</strong> la presencia de una mutación en el gen
-correspondiente, y con un <strong>0</strong> la ausencia de dicha mutación.</p>
-<p>Entre los genes incluidos se encuentran:</p>
+correspondiente, y con un <strong>0</strong> la condición de gen salvaje / no mutado (<em>wildtype</em>):</p>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong>: codifica una enzima involucrada en el metabolismo celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong>: gen supresor tumoral que participa en el control del ciclo
-celular y en la respuesta al daño del ADN. Sus alteraciones pueden
-favorecer la proliferación de células tumorales.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong>: participa en el mantenimiento de la estructura de la
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong>: Codifica una enzima involucrada en el metabolismo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong>: Gen supresor tumoral que participa en el control del ciclo celular y en la respuesta al daño del ADN. Sus alteraciones favorecen la proliferación tumoral.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong>: Participa en el mantenimiento de la estructura de la
 cromatina y en la estabilidad del genoma.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong>: gen supresor tumoral que regula vías relacionadas con el
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong>: Gen supresor tumoral que regula vías relacionadas con el
 crecimiento y la supervivencia celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong>: codifica un receptor involucrado en señales de crecimiento
-y proliferación celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong>: participa en la regulación de la expresión de otros genes y
-en procesos relacionados con el desarrollo celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">MUC16</span></code></strong>: codifica una proteína de gran tamaño asociada a la
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong>: Codifica un receptor involucrado en señales de crecimiento y proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong>: Participa en la regulación de la expresión de otros genes y en procesos relacionados con el desarrollo celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">MUC16</span></code></strong>: Codifica una proteína de gran tamaño asociada a la
 superficie celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code></strong>: participa en la vía de señalización PI3K/AKT, relacionada
-con crecimiento, supervivencia y proliferación celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">NF1</span></code></strong>: actúa como regulador negativo de señales relacionadas con el
-crecimiento celular. Sus alteraciones pueden contribuir a la
-proliferación tumoral.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code></strong>: codifica una subunidad reguladora de la vía PI3K, que
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3CA</span></code></strong>: Participa en la vía de señalización PI3K/AKT, relacionada con crecimiento, supervivencia y proliferación celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NF1</span></code></strong>: Actúa como regulador negativo de señales relacionadas con el crecimiento celular. Sus alteraciones pueden contribuir a la proliferación tumoral.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PIK3R1</span></code></strong>: Codifica una subunidad reguladora de la vía PI3K, que
 interviene en procesos de crecimiento y supervivencia celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">FUBP1</span></code></strong>: participa en la regulación de la expresión génica y del
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FUBP1</span></code></strong>: Participa en la regulación de la expresión génica y del
 crecimiento celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">RB1</span></code></strong>: gen supresor tumoral que participa en el control del ciclo
-celular y regula la progresión de las células hacia la división.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code></strong>: forma parte de la vía de señalización Notch, relacionada
-con la diferenciación, proliferación y supervivencia celular.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">BCOR</span></code></strong>: participa en la regulación de la expresión génica mediante
-complejos relacionados con la cromatina.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">CSMD3</span></code></strong>: codifica una proteína de gran tamaño y se encuentra entre
-los genes que pueden presentar mutaciones en distintos tumores.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code></strong>: participa en la remodelación de la cromatina y, por
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">RB1</span></code></strong>: Gen supresor tumoral que participa en el control del ciclo celular y regula la progresión de las células hacia la división.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">NOTCH1</span></code></strong>: Forma parte de la vía de señalización Notch, relacionada con la diferenciación, proliferación y supervivencia celular.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">BCOR</span></code></strong>: Participa en la regulación de la expresión génica mediante complejos relacionados con la cromatina.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CSMD3</span></code></strong>: Codifica una proteína de gran tamaño y se encuentra entre los genes que pueden presentar mutaciones en distintos tumores.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">SMARCA4</span></code></strong>: Participa en la remodelación de la cromatina y, por
 tanto, en la regulación de la expresión de los genes.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code></strong>: codifica una subunidad de un receptor de glutamato,
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">GRIN2A</span></code></strong>: Codifica una subunidad de un receptor de glutamato,
 relacionado principalmente con la señalización neuronal.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH2</span></code></strong>: codifica una enzima metabólica relacionada con IDH1.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">FAT4</span></code></strong>: participa en procesos relacionados con la organización,
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH2</span></code></strong>: Codifica una enzima metabólica relacionada con IDH1.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">FAT4</span></code></strong>: Participa en procesos relacionados con la organización,
 adhesión y crecimiento de las células.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code></strong>: codifica un receptor involucrado en señales de
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PDGFRA</span></code></strong>: Codifica un receptor involucrado en señales de
 crecimiento y proliferación celular.</p></li>
 </ul>
-<p>El dataset está compuesto por 24 variables de las cuales 23 son binarias mientras que <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> es númerica (<code class="docutils literal notranslate"><span class="pre">float64</span></code>), expresando
-en años la edad del paciente al momento del diagnóstico, donde la parte
-decimal incorpora información adicional sobre los días transcurridos.</p>
-<p>El objetivo a resolver es predecir la severidad del glioma en pacientes, clasificándolos entre Glioma de Bajo Grado (<strong>LGG</strong>) y Glioblastoma Multiforme (<strong>GBM</strong>) a partir de sus características clínicas y perfil de mutaciones genéticas. Sin embargo, antes de entrenar modelos de clasificación supervisados y realizar la selección óptima de variables, iniciaremos con un análisis exploratorio de datos (EDA) sobre el conjunto de entrenamiento (Train set) derivado del dataset TCGA Glioma. El propósito es comprender la estructura de las variables, identificar los patrones de mutación genéticos más frecuentes, detectar valores atípicos y analizar las relaciones clave entre los biomarcadores clínicos y las alteraciones moleculares que diferencian ambos tipos de tumor.</p>
+<hr class="docutils" />
+<p>El dataset está compuesto por <strong>24 variables en total</strong>:</p>
+<ul class="simple">
+<li><p><strong>Variable Objetivo (Target):</strong> <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (binaria: 0 = LGG, 1 = GBM).</p></li>
+<li><p><strong>21 atributos binarios (0/1):</strong> <code class="docutils literal notranslate"><span class="pre">Gender</span></code> y las 20 mutaciones genéticas evaluadas.</p></li>
+<li><p><strong>1 atributo categórico politómico:</strong> <code class="docutils literal notranslate"><span class="pre">Race</span></code> (codificada en 4 niveles).</p></li>
+<li><p><strong>1 atributo continuo:</strong> <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> (<code class="docutils literal notranslate"><span class="pre">float64</span></code>, expresada en años).</p></li>
+</ul>
+<p>El objetivo a resolver es predecir la severidad del glioma en pacientes, clasificándolos entre Glioma de Bajo Grado (<strong>LGG</strong>) y Glioblastoma Multiforme (<strong>GBM</strong>) a partir de sus características clínicas y perfil de mutaciones genéticas.</p>
 </section>
 </section>
-<section id="estructura">
-<h2>Estructura<a class="headerlink" href="#estructura" title="Permalink to this heading">#</a></h2>
+<section id="division-del-dataset-protocolo-anti-leakage">
+<h2>División del dataset - Protocolo Anti-Leakage<a class="headerlink" href="#division-del-dataset-protocolo-anti-leakage" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Conformacion</span>
-<span class="n">df_info</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 839 entries, 0 to 838
-Columns: 24 entries, Grade to PDGFRA
-dtypes: float64(1), int64(23)
-memory usage: 157.4 KB
-</pre></div>
-</div>
-</div>
-</div>
-<p>El conjunto de datos presenta una estructura completamente limpia y estructurada de 839 registros y 24 variables, sin presencia de valores nulos o faltantes. Está compuesto por una única variable continua de tipo flotante correspondiente a la edad al diagnóstico (<code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code>) y 23 variables enteras que condensan la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>), las características demográficas de género y raza, y la presencia binaria de mutaciones en los 20 genes analizados. Con un consumo de memoria optimizado de apenas 157.4 KB, esta arquitectura tabular ligera permite ejecutar análisis exploratorios, transformaciones de ingeniería de características y entrenamientos de modelos predictivos de manera altamente eficiente.</p>
-</section>
-<section id="datos-faltantes">
-<h2>Datos faltantes<a class="headerlink" href="#datos-faltantes" title="Permalink to this heading">#</a></h2>
-<p>A continuación se revisan los valores faltantes y las principales
-estadísticas descriptivas del conjunto de datos.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores faltantes:&quot;</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">df_info</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valores faltantes:
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
-</pre></div>
-</div>
-</div>
-</div>
-<p>El conjunto de datos no presenta datos faltantes.</p>
-</section>
-<section id="division-del-dataset">
-<h2>División del dataset<a class="headerlink" href="#division-del-dataset" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
 
-<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="n">conteo</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Grade&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">proporcion</span> <span class="o">=</span> <span class="n">conteo</span> <span class="o">/</span> <span class="n">conteo</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="n">conteo</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">proporcion</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">conteo</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">conteo</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+               <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+               <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.55</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_info</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución Global de Tipos de Glioma (Target)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Clase (0 = LGG, 1 = GBM)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad de Pacientes&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;LGG (58.05%)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (41.95%)&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">conteo</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">proporcion</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">10.5</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
 
-<span class="c1"># Añadir etiquetas de conteo sobre las barras</span>
-<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
-                <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()),</span> 
-                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> 
-                <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">)</span>
-
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;LGG (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (1)&#39;</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">10.5</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Número de pacientes&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Distribución de la variable objetivo: Grado tumoral&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conteo</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a5533fad2cbab9e90a00176fde15897c3a034d8333ff9c9f55927ac1016b2f64.png" src="_images/a5533fad2cbab9e90a00176fde15897c3a034d8333ff9c9f55927ac1016b2f64.png" />
+<img alt="_images/1b1ae59ecce88e0329bc722b7b63700e44a223abcfa928bc9dbca61d4ba85831.png" src="_images/1b1ae59ecce88e0329bc722b7b63700e44a223abcfa928bc9dbca61d4ba85831.png" />
 </div>
 </div>
-<p>La elección de una partición estratificada (Stratified Train-Test Split) se justifica por la necesidad de preservar la proporción original de las clases de la variable objetivo (Grade) en ambos subconjuntos de datos. En el dataset completo, la distribución presenta un ligero desbalance, donde el 58.05% corresponde a Gliomas de Bajo Grado (LGG) y el 41.95% a Glioblastomas (GBM), una división sin estratificar podría dejar los conjuntos de <code class="docutils literal notranslate"><span class="pre">train</span></code> y <code class="docutils literal notranslate"><span class="pre">test</span></code> sesgados a un solo grupo de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code>.</p>
+<p>La elección de una partición estratificada (Stratified Train-Test Split) se justifica por la necesidad de preservar la proporción original de las clases de la variable objetivo (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>) en ambos subconjuntos de datos. En el dataset completo, la distribución presenta un ligero desbalance (ratio ≈ 1.4:1), donde el 58.05% corresponde a Gliomas de Bajo Grado (LGG) y el 41.95% a Glioblastomas (GBM), una división sin estratificar podría dejar los conjuntos de <code class="docutils literal notranslate"><span class="pre">train</span></code> y <code class="docutils literal notranslate"><span class="pre">test</span></code> sesgados a un solo grupo de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">df_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">df_info</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> 
@@ -1071,37 +1268,33 @@ estadísticas descriptivas del conjunto de datos.</p>
 <h3>Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)<a class="headerlink" href="#analisis-de-la-variable-grade-target" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">props</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
 
-<span class="n">summary_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;Clase&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;LGG (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (1)&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;Pacientes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-    <span class="s1">&#39;Proporción (%)&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">props</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">props</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
-<span class="p">})</span>
+<span class="n">conteo</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">proporcion</span> <span class="o">=</span> <span class="p">(</span><span class="n">conteo</span> <span class="o">/</span> <span class="n">conteo</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="c1"># 3. Visualización</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">summary_df</span><span class="p">,</span> 
-    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Clase&#39;</span><span class="p">,</span> 
-    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Pacientes&#39;</span><span class="p">,</span> 
-    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">f</span><span class="s2">&quot;LGG (0)</span><span class="se">\n</span><span class="si">{</span><span class="n">conteo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">proporcion</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;GBM (1)</span><span class="se">\n</span><span class="si">{</span><span class="n">conteo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">proporcion</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">wedges</span><span class="p">,</span> <span class="n">texts</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+    <span class="n">conteo</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+    <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+    <span class="n">wedgeprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">width</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">),</span> 
+    <span class="n">textprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mf">10.5</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de la Variable Objetivo (Grade) - Train Set&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Diagnóstico de Glioma&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cantidad de Pacientes&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">)</span>
-
-<span class="c1"># Etiquetas numéricas sobre las barras</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">):</span>
-    <span class="n">height</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
-    <span class="n">pct</span> <span class="o">=</span> <span class="n">summary_df</span><span class="p">[</span><span class="s1">&#39;Proporción (%)&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">pct</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">,</span>
-                <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
-                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-                <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Distribución de la variable objetivo: Grado tumoral&quot;</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1109,7 +1302,7 @@ estadísticas descriptivas del conjunto de datos.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6513e1987d751a8e4d8e3c314f11a783d94aab1a71c47496fb644a349200b661.png" src="_images/6513e1987d751a8e4d8e3c314f11a783d94aab1a71c47496fb644a349200b661.png" />
+<img alt="_images/bea44b2f5a27207110caf831de4b1a543085d23ca50bc05f53404852e6ee5c10.png" src="_images/bea44b2f5a27207110caf831de4b1a543085d23ca50bc05f53404852e6ee5c10.png" />
 </div>
 </div>
 <p>En el conjunto de entrenamiento (671 pacientes), la variable objetivo <code class="docutils literal notranslate"><span class="pre">Grade</span></code> presenta una distribución de 389 casos correspondientes a Gliomas de Bajo Grado (LGG, 58.0%) y 282 casos a Glioblastoma Multiforme (GBM, 42.0%). La relación entre clases es aproximadamente de <strong>1.38 a 1</strong>, lo que indica que <strong>no hay un desbalance severo</strong>.</p>
@@ -1120,10 +1313,130 @@ estadísticas descriptivas del conjunto de datos.</p>
 <h4><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code><a class="headerlink" href="#age-at-diagnosis" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age_series</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
+
+<span class="n">mean_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">median_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">q1_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">q3_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">iqr_age</span> <span class="o">=</span> <span class="n">q3_age</span> <span class="o">-</span> <span class="n">q1_age</span>
+<span class="n">min_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">max_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">skew_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+<span class="n">kurt_age</span> <span class="o">=</span> <span class="n">age_series</span><span class="o">.</span><span class="n">kurt</span><span class="p">()</span>
+
+<span class="n">summary_age</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Métrica Estadística&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Total de Muestras (n)&#39;</span><span class="p">,</span> <span class="s1">&#39;Media (μ)&#39;</span><span class="p">,</span> <span class="s1">&#39;Desviación Estándar (σ)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Mínimo&#39;</span><span class="p">,</span> <span class="s1">&#39;Primer Cuartil (Q1)&#39;</span><span class="p">,</span> <span class="s1">&#39;Mediana (Q2)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Tercer Cuartil (Q3)&#39;</span><span class="p">,</span> <span class="s1">&#39;Máximo&#39;</span><span class="p">,</span> <span class="s1">&#39;Rango Intercuartílico (IQR)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Asimetría (Skewness)&#39;</span><span class="p">,</span> <span class="s1">&#39;Curtosis&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Valor&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">age_series</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">std_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">q1_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">q3_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">max_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">iqr_age</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">skew_age</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">kurt_age</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TABLA RESUMEN: EDAD AL DIAGNÓSTICO&quot;</span><span class="p">)</span>
+<span class="n">summary_age</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TABLA RESUMEN: EDAD AL DIAGNÓSTICO
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Métrica Estadística</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Total de Muestras (n)</td>
+      <td>671</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Media (μ)</td>
+      <td>51.10 años</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Desviación Estándar (σ)</td>
+      <td>15.63 años</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Mínimo</td>
+      <td>14.42 años</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Primer Cuartil (Q1)</td>
+      <td>37.84 años</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Mediana (Q2)</td>
+      <td>51.99 años</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Tercer Cuartil (Q3)</td>
+      <td>62.62 años</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Máximo</td>
+      <td>89.29 años</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Rango Intercuartílico (IQR)</td>
+      <td>24.79 años</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Asimetría (Skewness)</td>
+      <td>0.0547</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Curtosis</td>
+      <td>-0.8231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
 
-<span class="c1"># Histograma + KDE</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Edad al Diagnóstico (Train Set)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Edad (Años)&#39;</span><span class="p">)</span>
@@ -1132,7 +1445,6 @@ estadísticas descriptivas del conjunto de datos.</p>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mediana: </span><span class="si">{</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;Age_at_diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-<span class="c1"># Boxplot</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#8da0cb&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Boxplot de Edad (Detección de Outliers)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Edad (Años)&#39;</span><span class="p">)</span>
@@ -1143,66 +1455,207 @@ estadísticas descriptivas del conjunto de datos.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/abc905c353d7d29c66e90698f9ba79fd9ad5ec34b1ef24cffa8bb42ec801e410.png" src="_images/abc905c353d7d29c66e90698f9ba79fd9ad5ec34b1ef24cffa8bb42ec801e410.png" />
+<img alt="_images/1c6aa2e641904d10f4908a9f9d984faa5400d19f1c5b86b36a8b52d8e4aa1153.png" src="_images/1c6aa2e641904d10f4908a9f9d984faa5400d19f1c5b86b36a8b52d8e4aa1153.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">q3</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
 
-<span class="c1"># Crear un DataFrame formateado para presentación</span>
-<span class="n">resumen_edad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;Métrica&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s1">&#39;Total Pacientes (n)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Promedio (Media)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Desviación Estándar&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Mínimo&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Primer Cuartil (Q1 - 25%)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Mediana (Q2 - 50%)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Tercer Cuartil (Q3 - 75%)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Máximo&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Rango Intercuartílico (IQR)&#39;</span><span class="p">,</span> 
-        <span class="s1">&#39;Asimetría (Skewness)&#39;</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;Valor&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="nb">int</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]),</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;25%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;50%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;75%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;75%&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;25%&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">]</span>
-<span class="p">})</span>
+<span class="n">limite_inferior</span> <span class="o">=</span> <span class="n">q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span>
+<span class="n">limite_superior</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">iqr</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== RESUMEN ESTADÍSTICO DE EDAD AL DIAGNÓSTICO (TRAIN SET) ===&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">resumen_edad</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">limite_inferior</span><span class="p">)</span> <span class="o">|</span> 
+                   <span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">limite_superior</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVALUACIÓN MATEMÁTICA DE OUTLIERS (MÉTODO IQR)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• Límite Inferior Aceptable: </span><span class="si">{</span><span class="n">limite_inferior</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• Límite Superior Aceptable: </span><span class="si">{</span><span class="n">limite_superior</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;• Cantidad de outliers detectados: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== RESUMEN ESTADÍSTICO DE EDAD AL DIAGNÓSTICO (TRAIN SET) ===
-                    Métrica      Valor
-        Total Pacientes (n)        671
-           Promedio (Media) 51.10 años
-        Desviación Estándar 15.63 años
-                     Mínimo 14.42 años
-  Primer Cuartil (Q1 - 25%) 37.84 años
-         Mediana (Q2 - 50%) 51.99 años
-  Tercer Cuartil (Q3 - 75%) 62.62 años
-                     Máximo 89.29 años
-Rango Intercuartílico (IQR) 24.79 años
-       Asimetría (Skewness)     0.0547
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EVALUACIÓN MATEMÁTICA DE OUTLIERS (MÉTODO IQR)
+• Límite Inferior Aceptable: 0.65 años
+• Límite Superior Aceptable: 99.81 años
+• Cantidad de outliers detectados: 0
 </pre></div>
 </div>
 </div>
 </div>
-<p>La variable continua Age_at_diagnosis registra una media de 51.10 años (<span class="math notranslate nohighlight">\(\pm 15.63\)</span>) y una mediana de 51.99 años en el conjunto de entrenamiento, abarcando un rango de edad desde los 14.42 hasta los 89.29 años. El análisis exploratorio revela una distribución simétrica con comportamiento bimodal (picos poblacionales cerca de los 35 y 55 años) y confirma la ausencia de valores atípicos (outliers). Este patrón sugiere la presencia de subgrupos demográficos diferenciados que posteriormente se contrastarán con el grado de severidad del tumoral (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>).</p>
+<p>La detección de valores atípicos para la variable continua <code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code> se evaluó tanto matemáticamente mediante la regla del Rango Intercuartílico (<span class="math notranslate nohighlight">\(1.5 \times \text{IQR}\)</span>) como mediante inspección visual con diagramas de caja. Con un <span class="math notranslate nohighlight">\(Q_1\)</span> de <span class="math notranslate nohighlight">\(37.84\)</span> años y un <span class="math notranslate nohighlight">\(Q_3\)</span> de <span class="math notranslate nohighlight">\(62.62\)</span> años (<span class="math notranslate nohighlight">\(\text{IQR} = 24.79\)</span> años), los límites teóricos de corte se establecieron en <span class="math notranslate nohighlight">\(0.66\)</span> y <span class="math notranslate nohighlight">\(99.82\)</span> años. Al contrastar estos umbrales con el rango real de los pacientes (<span class="math notranslate nohighlight">\(14.42\)</span> a <span class="math notranslate nohighlight">\(89.29\)</span> años), se determinó la ausencia total de outliers o registros anómalos en la muestra de entrenamiento (<span class="math notranslate nohighlight">\(n = 671\)</span>).</p>
+<p>La variable registra una media de 51.10 años (<span class="math notranslate nohighlight">\(\pm 15.63\)</span>) y una mediana de 51.99 años en el conjunto de entrenamiento, abarcando un rango de edad desde los 14.42 hasta los 89.29 años. El análisis exploratorio revela una distribución simétrica con comportamiento bimodal (picos poblacionales cerca de los 35 y 55 años). Este patrón sugiere la presencia de subgrupos demográficos diferenciados que posteriormente se contrastarán con el grado de severidad del tumoral (<code class="docutils literal notranslate"><span class="pre">Grade</span></code>).</p>
 </section>
 </section>
+</section>
+<section id="analisis-bivariado">
+<h2>Análisis Bivariado<a class="headerlink" href="#analisis-bivariado" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuración gráfica</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="n">lgg_age</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
+<span class="n">gbm_age</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
+
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_val_age</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">,</span> <span class="n">gbm_age</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== EDAD VS. GRADE ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LGG (0) - Edad Promedio: </span><span class="si">{</span><span class="n">lgg_age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">lgg_age</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GBM (1) - Edad Promedio: </span><span class="si">{</span><span class="n">gbm_age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">gbm_age</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prueba T-Student: t = </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-value = </span><span class="si">{</span><span class="n">p_val_age</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Gráficos de Edad</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Edad por Tipo de Glioma&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;LGG (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (1)&#39;</span><span class="p">])</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">],</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Densidad de Edad por Tipo de Glioma&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># 3. ANÁLISIS BIVARIADO: MUTACIONES VS. GRADE (PRUEBA CHI-CUADRADO)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="n">chi2_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">train_data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+    <span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+    <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+    
+    <span class="n">pct_lgg</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">pct_gbm</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gbm_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    
+    <span class="n">chi2_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
+        <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n LGG (0)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_lgg</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n GBM (1)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_gbm</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;Chi2 Stat&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">chi2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p</span>
+    <span class="p">})</span>
+
+<span class="n">chi2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">chi2_results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;p-value&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== TOP 10 MUTACIONES/VARIABLES ASOCIADAS A GRADE (CHI-CUADRADO) ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chi2_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># 4. ANÁLISIS DE CORRELACIÓN DE SPEARMAN</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
+
+<span class="c1"># Heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;vlag&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlación de Spearman (Train Set)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Correlación directa con Target (Grade)</span>
+<span class="n">target_corr</span> <span class="o">=</span> <span class="n">corr_matrix</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Grade&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">target_corr</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_corr</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;vlag&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Correlación de Spearman con la Severidad (Grade)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== EDAD VS. GRADE ===
+LGG (0) - Edad Promedio: 44.10 ± 13.20 años
+GBM (1) - Edad Promedio: 60.75 ± 13.45 años
+Prueba T-Student: t = -15.9935, p-value = 5.3664e-49
+</pre></div>
+</div>
+<img alt="_images/f7cbc0b5cd957f56c86c0210100b3e28e251d922959877c0ca6399055594c69c.png" src="_images/f7cbc0b5cd957f56c86c0210100b3e28e251d922959877c0ca6399055594c69c.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">36</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">pct_lgg</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="n">pct_gbm</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gbm_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="n">chi2_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span>     <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span>     <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n LGG (0)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_lgg</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span>     <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="p">})</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6205,</span> in <span class="ni">Series.sum</span><span class="nt">(self, axis, skipna, numeric_only, min_count, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6196</span> <span class="nd">@doc</span><span class="p">(</span><span class="n">make_doc</span><span class="p">(</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">6197</span> <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">6198</span>     <span class="bp">self</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6203</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">6204</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">6205</span>     <span class="k">return</span> <span class="n">NDFrame</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="n">min_count</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12055,</span> in <span class="ni">NDFrame.sum</span><span class="nt">(self, axis, skipna, numeric_only, min_count, **kwargs)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12047</span> <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">12048</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12049</span>     <span class="n">axis</span><span class="p">:</span> <span class="n">Axis</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12053</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12054</span> <span class="p">):</span>
+<span class="ne">&gt; </span><span class="mi">12055</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_count_stat_function</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">12056</span>         <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">nanops</span><span class="o">.</span><span class="n">nansum</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="n">min_count</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">  </span><span class="mi">12057</span>     <span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12038,</span> in <span class="ni">NDFrame._min_count_stat_function</span><span class="nt">(self, name, func, axis, skipna, numeric_only, min_count, **kwargs)</span>
+<span class="g g-Whitespace">  </span><span class="mi">12035</span> <span class="k">elif</span> <span class="n">axis</span> <span class="ow">is</span> <span class="n">lib</span><span class="o">.</span><span class="n">no_default</span><span class="p">:</span>
+<span class="g g-Whitespace">  </span><span class="mi">12036</span>     <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ne">&gt; </span><span class="mi">12038</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span>
+<span class="g g-Whitespace">  </span><span class="mi">12039</span>     <span class="n">func</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12040</span>     <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12041</span>     <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12042</span>     <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12043</span>     <span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12044</span>     <span class="n">min_count</span><span class="o">=</span><span class="n">min_count</span><span class="p">,</span>
+<span class="g g-Whitespace">  </span><span class="mi">12045</span> <span class="p">)</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6120,</span> in <span class="ni">Series._reduce</span><span class="nt">(self, op, name, axis, skipna, numeric_only, filter_type, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6116</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_get_axis_number</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6118</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6119</span>     <span class="c1"># dispatch to ExtensionArray interface</span>
+<span class="ne">-&gt; </span><span class="mi">6120</span>     <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6122</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">6123</span>     <span class="c1"># dispatch to numpy arrays</span>
+<span class="g g-Whitespace">   </span><span class="mi">6124</span>     <span class="k">if</span> <span class="n">numeric_only</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s2">&quot;iufcb&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">6125</span>         <span class="c1"># i.e. not is_numeric_dtype(self.dtype)</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\categorical.py:2325,</span> in <span class="ni">Categorical._reduce</span><span class="nt">(self, name, skipna, keepdims, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2322</span> <span class="k">def</span> <span class="nf">_reduce</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2323</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">skipna</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">   </span><span class="mi">2324</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">2325</span>     <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2326</span>     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;argmax&quot;</span><span class="p">,</span> <span class="s2">&quot;argmin&quot;</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2327</span>         <span class="c1"># don&#39;t wrap in Categorical!</span>
+<span class="g g-Whitespace">   </span><span class="mi">2328</span>         <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\base.py:1857,</span> in <span class="ni">ExtensionArray._reduce</span><span class="nt">(self, name, skipna, keepdims, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1855</span> <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1856</span> <span class="k">if</span> <span class="n">meth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1857</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1858</span>         <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; with dtype </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1859</span>         <span class="sa">f</span><span class="s2">&quot;does not support reduction &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1860</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1861</span> <span class="n">result</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1862</span> <span class="k">if</span> <span class="n">keepdims</span><span class="p">:</span>
+
+<span class="ne">TypeError</span>: &#39;Categorical&#39; with dtype category does not support reduction &#39;sum&#39;
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1243,7 +1696,7 @@ Rango Intercuartílico (IQR) 24.79 años
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Glioma Grading Clinical and Mutation Features - Visualización de Datos 2026</p>
+        <p class="prev-next-title">Caracterización Clínico-Molecular del Grado Tumoral en Gliomas - Visualización de Datos 2026</p>
       </div>
     </a>
 </div></div>
@@ -1264,15 +1717,17 @@ Rango Intercuartílico (IQR) 24.79 años
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto-de-los-datos">Contexto de los datos</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable objetivo</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables clínicas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-objetivo">Variable Objetivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-clinicas">Variables Clínicas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-geneticas">Variables genéticas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estructura">Estructura</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos-faltantes">Datos faltantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset">División del dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-del-dataset-protocolo-anti-leakage">División del dataset - Protocolo Anti-Leakage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado-de-variables">Análisis Univariado de variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-grade-target">Análisis de la variable <code class="docutils literal notranslate"><span class="pre">Grade</span></code> (Target)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a><ul class="nav section-nav flex-column">
@@ -1281,6 +1736,7 @@ Rango Intercuartílico (IQR) 24.79 años
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">Análisis Bivariado</a></li>
 </ul>
   </nav></div>
 

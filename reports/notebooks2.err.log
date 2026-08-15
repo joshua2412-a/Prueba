@@ -1,0 +1,173 @@
+Traceback (most recent call last):
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\jupyter_core\utils\__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Configuración gráfica
+sns.set_theme(style="whitegrid")
+plt.rcParams['figure.figsize'] = (10, 6)
+
+lgg_age = train_data[train_data['Grade'] == 0]['Age_at_diagnosis']
+gbm_age = train_data[train_data['Grade'] == 1]['Age_at_diagnosis']
+
+t_stat, p_val_age = ttest_ind(lgg_age, gbm_age)
+
+print("=== EDAD VS. GRADE ===")
+print(f"LGG (0) - Edad Promedio: {lgg_age.mean():.2f} ± {lgg_age.std():.2f} años")
+print(f"GBM (1) - Edad Promedio: {gbm_age.mean():.2f} ± {gbm_age.std():.2f} años")
+print(f"Prueba T-Student: t = {t_stat:.4f}, p-value = {p_val_age:.4e}\n")
+
+# Gráficos de Edad
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+sns.boxplot(data=train_data, x='Grade', y='Age_at_diagnosis', palette=['#2b5c8f', '#d95f02'], ax=axes[0])
+axes[0].set_title('Distribución de Edad por Tipo de Glioma', fontweight='bold')
+axes[0].set_xticklabels(['LGG (0)', 'GBM (1)'])
+
+sns.kdeplot(data=train_data, x='Age_at_diagnosis', hue='Grade', palette=['#2b5c8f', '#d95f02'], common_norm=False, fill=True, alpha=0.3, ax=axes[1])
+axes[1].set_title('Densidad de Edad por Tipo de Glioma', fontweight='bold')
+plt.tight_layout()
+plt.show()
+
+# ------------------------------------------------------------------------------
+# 3. ANÁLISIS BIVARIADO: MUTACIONES VS. GRADE (PRUEBA CHI-CUADRADO)
+# ------------------------------------------------------------------------------
+chi2_results = []
+cat_cols = [c for c in train_data.columns if c not in ['Grade', 'Age_at_diagnosis']]
+
+for col in cat_cols:
+    contingency = pd.crosstab(train_data[col], train_data['Grade'])
+    chi2, p, dof, ex = chi2_contingency(contingency)
+    
+    pct_lgg = (train_data[train_data['Grade'] == 0][col].sum() / len(lgg_age)) * 100
+    pct_gbm = (train_data[train_data['Grade'] == 1][col].sum() / len(gbm_age)) * 100
+    
+    chi2_results.append({
+        'Variable': col,
+        '% en LGG (0)': round(pct_lgg, 1),
+        '% en GBM (1)': round(pct_gbm, 1),
+        'Chi2 Stat': round(chi2, 2),
+        'p-value': p
+    })
+
+chi2_df = pd.DataFrame(chi2_results).sort_values(by='p-value')
+print("=== TOP 10 MUTACIONES/VARIABLES ASOCIADAS A GRADE (CHI-CUADRADO) ===")
+print(chi2_df.head(10).to_string(index=False))
+
+# ------------------------------------------------------------------------------
+# 4. ANÁLISIS DE CORRELACIÓN DE SPEARMAN
+# ------------------------------------------------------------------------------
+corr_matrix = train_data.corr(method='spearman')
+
+# Heatmap
+plt.figure(figsize=(14, 10))
+sns.heatmap(corr_matrix, cmap='vlag', annot=True, fmt='.2f', linewidths=0.5)
+plt.title('Matriz de Correlación de Spearman (Train Set)', fontweight='bold', fontsize=14)
+plt.show()
+
+# Correlación directa con Target (Grade)
+target_corr = corr_matrix['Grade'].drop('Grade').sort_values(ascending=False)
+
+plt.figure(figsize=(8, 6))
+sns.barplot(x=target_corr.values, y=target_corr.index, palette='vlag')
+plt.title('Correlación de Spearman con la Severidad (Grade)', fontweight='bold')
+plt.axvline(0, color='black', linestyle='--', linewidth=0.8)
+plt.tight_layout()
+plt.show()
+------------------
+
+----- stdout -----
+=== EDAD VS. GRADE ===
+LGG (0) - Edad Promedio: 44.10 ± 13.20 años
+GBM (1) - Edad Promedio: 60.75 ± 13.45 años
+Prueba T-Student: t = -15.9935, p-value = 5.3664e-49
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[11], line 36[0m
+[0;32m     33[0m contingency [38;5;241m=[39m pd[38;5;241m.[39mcrosstab(train_data[col], train_data[[38;5;124m'[39m[38;5;124mGrade[39m[38;5;124m'[39m])
+[0;32m     34[0m chi2, p, dof, ex [38;5;241m=[39m chi2_contingency(contingency)
+[1;32m---> 36[0m pct_lgg [38;5;241m=[39m ([43mtrain_data[49m[43m[[49m[43mtrain_data[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mGrade[39;49m[38;5;124;43m'[39;49m[43m][49m[43m [49m[38;5;241;43m==[39;49m[43m [49m[38;5;241;43m0[39;49m[43m][49m[43m[[49m[43mcol[49m[43m][49m[38;5;241;43m.[39;49m[43msum[49m[43m([49m[43m)[49m [38;5;241m/[39m [38;5;28mlen[39m(lgg_age)) [38;5;241m*[39m [38;5;241m100[39m
+[0;32m     37[0m pct_gbm [38;5;241m=[39m (train_data[train_data[[38;5;124m'[39m[38;5;124mGrade[39m[38;5;124m'[39m] [38;5;241m==[39m [38;5;241m1[39m][col][38;5;241m.[39msum() [38;5;241m/[39m [38;5;28mlen[39m(gbm_age)) [38;5;241m*[39m [38;5;241m100[39m
+[0;32m     39[0m chi2_results[38;5;241m.[39mappend({
+[0;32m     40[0m     [38;5;124m'[39m[38;5;124mVariable[39m[38;5;124m'[39m: col,
+[0;32m     41[0m     [38;5;124m'[39m[38;5;132;01m% e[39;00m[38;5;124mn LGG (0)[39m[38;5;124m'[39m: [38;5;28mround[39m(pct_lgg, [38;5;241m1[39m),
+[1;32m   (...)[0m
+[0;32m     44[0m     [38;5;124m'[39m[38;5;124mp-value[39m[38;5;124m'[39m: p
+[0;32m     45[0m })
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6205[0m, in [0;36mSeries.sum[1;34m(self, axis, skipna, numeric_only, min_count, **kwargs)[0m
+[0;32m   6196[0m [38;5;129m@doc[39m(make_doc([38;5;124m"[39m[38;5;124msum[39m[38;5;124m"[39m, ndim[38;5;241m=[39m[38;5;241m1[39m))
+[0;32m   6197[0m [38;5;28;01mdef[39;00m [38;5;21msum[39m(
+[0;32m   6198[0m     [38;5;28mself[39m,
+[1;32m   (...)[0m
+[0;32m   6203[0m     [38;5;241m*[39m[38;5;241m*[39mkwargs,
+[0;32m   6204[0m ):
+[1;32m-> 6205[0m     [38;5;28;01mreturn[39;00m NDFrame[38;5;241m.[39msum([38;5;28mself[39m, axis, skipna, numeric_only, min_count, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12055[0m, in [0;36mNDFrame.sum[1;34m(self, axis, skipna, numeric_only, min_count, **kwargs)[0m
+[0;32m  12047[0m [38;5;28;01mdef[39;00m [38;5;21msum[39m(
+[0;32m  12048[0m     [38;5;28mself[39m,
+[0;32m  12049[0m     axis: Axis [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;241m0[39m,
+[1;32m   (...)[0m
+[0;32m  12053[0m     [38;5;241m*[39m[38;5;241m*[39mkwargs,
+[0;32m  12054[0m ):
+[1;32m> 12055[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_min_count_stat_function(
+[0;32m  12056[0m         [38;5;124m"[39m[38;5;124msum[39m[38;5;124m"[39m, nanops[38;5;241m.[39mnansum, axis, skipna, numeric_only, min_count, [38;5;241m*[39m[38;5;241m*[39mkwargs
+[0;32m  12057[0m     )
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12038[0m, in [0;36mNDFrame._min_count_stat_function[1;34m(self, name, func, axis, skipna, numeric_only, min_count, **kwargs)[0m
+[0;32m  12035[0m [38;5;28;01melif[39;00m axis [38;5;129;01mis[39;00m lib[38;5;241m.[39mno_default:
+[0;32m  12036[0m     axis [38;5;241m=[39m [38;5;241m0[39m
+[1;32m> 12038[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_reduce[49m[43m([49m
+[0;32m  12039[0m [43m    [49m[43mfunc[49m[43m,[49m
+[0;32m  12040[0m [43m    [49m[43mname[49m[38;5;241;43m=[39;49m[43mname[49m[43m,[49m
+[0;32m  12041[0m [43m    [49m[43maxis[49m[38;5;241;43m=[39;49m[43maxis[49m[43m,[49m
+[0;32m  12042[0m [43m    [49m[43mskipna[49m[38;5;241;43m=[39;49m[43mskipna[49m[43m,[49m
+[0;32m  12043[0m [43m    [49m[43mnumeric_only[49m[38;5;241;43m=[39;49m[43mnumeric_only[49m[43m,[49m
+[0;32m  12044[0m [43m    [49m[43mmin_count[49m[38;5;241;43m=[39;49m[43mmin_count[49m[43m,[49m
+[0;32m  12045[0m [43m[49m[43m)[49m
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6120[0m, in [0;36mSeries._reduce[1;34m(self, op, name, axis, skipna, numeric_only, filter_type, **kwds)[0m
+[0;32m   6116[0m     [38;5;28mself[39m[38;5;241m.[39m_get_axis_number(axis)
+[0;32m   6118[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(delegate, ExtensionArray):
+[0;32m   6119[0m     [38;5;66;03m# dispatch to ExtensionArray interface[39;00m
+[1;32m-> 6120[0m     [38;5;28;01mreturn[39;00m delegate[38;5;241m.[39m_reduce(name, skipna[38;5;241m=[39mskipna, [38;5;241m*[39m[38;5;241m*[39mkwds)
+[0;32m   6122[0m [38;5;28;01melse[39;00m:
+[0;32m   6123[0m     [38;5;66;03m# dispatch to numpy arrays[39;00m
+[0;32m   6124[0m     [38;5;28;01mif[39;00m numeric_only [38;5;129;01mand[39;00m [38;5;28mself[39m[38;5;241m.[39mdtype[38;5;241m.[39mkind [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m [38;5;124m"[39m[38;5;124miufcb[39m[38;5;124m"[39m:
+[0;32m   6125[0m         [38;5;66;03m# i.e. not is_numeric_dtype(self.dtype)[39;00m
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\categorical.py:2325[0m, in [0;36mCategorical._reduce[1;34m(self, name, skipna, keepdims, **kwargs)[0m
+[0;32m   2322[0m [38;5;28;01mdef[39;00m [38;5;21m_reduce[39m(
+[0;32m   2323[0m     [38;5;28mself[39m, name: [38;5;28mstr[39m, [38;5;241m*[39m, skipna: [38;5;28mbool[39m [38;5;241m=[39m [38;5;28;01mTrue[39;00m, keepdims: [38;5;28mbool[39m [38;5;241m=[39m [38;5;28;01mFalse[39;00m, [38;5;241m*[39m[38;5;241m*[39mkwargs
+[0;32m   2324[0m ):
+[1;32m-> 2325[0m     result [38;5;241m=[39m [38;5;28msuper[39m()[38;5;241m.[39m_reduce(name, skipna[38;5;241m=[39mskipna, keepdims[38;5;241m=[39mkeepdims, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m   2326[0m     [38;5;28;01mif[39;00m name [38;5;129;01min[39;00m [[38;5;124m"[39m[38;5;124margmax[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124margmin[39m[38;5;124m"[39m]:
+[0;32m   2327[0m         [38;5;66;03m# don't wrap in Categorical![39;00m
+[0;32m   2328[0m         [38;5;28;01mreturn[39;00m result
+
+File [1;32m~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\base.py:1857[0m, in [0;36mExtensionArray._reduce[1;34m(self, name, skipna, keepdims, **kwargs)[0m
+[0;32m   1855[0m meth [38;5;241m=[39m [38;5;28mgetattr[39m([38;5;28mself[39m, name, [38;5;28;01mNone[39;00m)
+[0;32m   1856[0m [38;5;28;01mif[39;00m meth [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m-> 1857[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m(
+[0;32m   1858[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124m'[39m[38;5;132;01m{[39;00m[38;5;28mtype[39m([38;5;28mself[39m)[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m with dtype [39m[38;5;132;01m{[39;00m[38;5;28mself[39m[38;5;241m.[39mdtype[38;5;132;01m}[39;00m[38;5;124m [39m[38;5;124m"[39m
+[0;32m   1859[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mdoes not support reduction [39m[38;5;124m'[39m[38;5;132;01m{[39;00mname[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m"[39m
+[0;32m   1860[0m     )
+[0;32m   1861[0m result [38;5;241m=[39m meth(skipna[38;5;241m=[39mskipna, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m   1862[0m [38;5;28;01mif[39;00m keepdims:
+
+[1;31mTypeError[0m: 'Categorical' with dtype category does not support reduction 'sum'
+

@@ -1,0 +1,57 @@
+Traceback (most recent call last):
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\jupyter_core\utils\__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\joshu\miniconda3\envs\dataviz2026\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+fig, axes = plt.subplots(1, 2, figsize=(11, 4.8))
+
+sns.violinplot(data=df, x="Grade_label", y="Age_at_diagnosis", order=["LGG", "GBM"],
+               palette={"LGG": PALETTE_GRADE[0], "GBM": PALETTE_GRADE[1]},
+               inner="quartile", ax=axes[0], cut=0)
+axes[0].set_title("Distribución de edad por grado tumoral")
+axes[0].set_xlabel("")
+axes[0].set_ylabel("Edad al diagnóstico (años)")
+
+sns.kdeplot(data=df, x="Age_at_diagnosis", hue="Grade_label",
+            palette={"LGG": PALETTE_GRADE[0], "GBM": PALETTE_GRADE[1]},
+            fill=True, alpha=0.35, common_norm=False, ax=axes[1])
+axes[1].set_title("Densidad de edad por grado tumoral")
+axes[1].set_xlabel("Edad al diagnóstico (años)")
+
+plt.tight_layout()
+plt.show()
+
+age_lgg = df.loc[df.Grade == 0, "Age_at_diagnosis"]
+age_gbm = df.loc[df.Grade == 1, "Age_at_diagnosis"]
+u_stat, p_val = stats.mannwhitneyu(age_lgg, age_gbm, alternative="two-sided")
+
+print(f"Edad media LGG: {age_lgg.mean():.2f} +/- {age_lgg.std():.2f} anios")
+print(f"Edad media GBM: {age_gbm.mean():.2f} +/- {age_gbm.std():.2f} anios")
+print(f"\nPrueba U de Mann-Whitney: U = {u_stat:.1f}, p-value = {p_val:.3e}")
+
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[8], line 21[0m
+[0;32m     19[0m age_lgg [38;5;241m=[39m df[38;5;241m.[39mloc[df[38;5;241m.[39mGrade [38;5;241m==[39m [38;5;241m0[39m, [38;5;124m"[39m[38;5;124mAge_at_diagnosis[39m[38;5;124m"[39m]
+[0;32m     20[0m age_gbm [38;5;241m=[39m df[38;5;241m.[39mloc[df[38;5;241m.[39mGrade [38;5;241m==[39m [38;5;241m1[39m, [38;5;124m"[39m[38;5;124mAge_at_diagnosis[39m[38;5;124m"[39m]
+[1;32m---> 21[0m u_stat, p_val [38;5;241m=[39m [43mstats[49m[38;5;241m.[39mmannwhitneyu(age_lgg, age_gbm, alternative[38;5;241m=[39m[38;5;124m"[39m[38;5;124mtwo-sided[39m[38;5;124m"[39m)
+[0;32m     23[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mEdad media LGG: [39m[38;5;132;01m{[39;00mage_lgg[38;5;241m.[39mmean()[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124m +/- [39m[38;5;132;01m{[39;00mage_lgg[38;5;241m.[39mstd()[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124m anios[39m[38;5;124m"[39m)
+[0;32m     24[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mEdad media GBM: [39m[38;5;132;01m{[39;00mage_gbm[38;5;241m.[39mmean()[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124m +/- [39m[38;5;132;01m{[39;00mage_gbm[38;5;241m.[39mstd()[38;5;132;01m:[39;00m[38;5;124m.2f[39m[38;5;132;01m}[39;00m[38;5;124m anios[39m[38;5;124m"[39m)
+
+[1;31mNameError[0m: name 'stats' is not defined
+

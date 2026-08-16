@@ -371,7 +371,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">Análisis Bivariado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion">Análisis de Correlación</a></li>
 </ul>
             </nav>
         </div>
@@ -1531,171 +1531,312 @@ crecimiento y proliferación celular.</p></li>
 </section>
 </section>
 </section>
-<section id="analisis-bivariado">
-<h2>Análisis Bivariado<a class="headerlink" href="#analisis-bivariado" title="Permalink to this heading">#</a></h2>
+<section id="analisis-de-correlacion">
+<h2>Análisis de Correlación<a class="headerlink" href="#analisis-de-correlacion" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuración gráfica</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spearman_corr</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
 
-<span class="n">lgg_age</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
-<span class="n">gbm_age</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">spearman_corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
 
-<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_val_age</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">,</span> <span class="n">gbm_age</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== EDAD VS. GRADE ===&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LGG (0) - Edad Promedio: </span><span class="si">{</span><span class="n">lgg_age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">lgg_age</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GBM (1) - Edad Promedio: </span><span class="si">{</span><span class="n">gbm_age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">gbm_age</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> años&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prueba T-Student: t = </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-value = </span><span class="si">{</span><span class="n">p_val_age</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Gráficos de Edad</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribución de Edad por Tipo de Glioma&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;LGG (0)&#39;</span><span class="p">,</span> <span class="s1">&#39;GBM (1)&#39;</span><span class="p">])</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2b5c8f&#39;</span><span class="p">,</span> <span class="s1">&#39;#d95f02&#39;</span><span class="p">],</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Densidad de Edad por Tipo de Glioma&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">spearman_corr</span><span class="p">,</span> 
+    <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;vlag&#39;</span><span class="p">,</span> 
+    <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> 
+    <span class="n">vmin</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> 
+    <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;Coeficiente de Correlación de Spearman (r)&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlación de Spearman (Train Set - 24 Variables)&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1"># 3. ANÁLISIS BIVARIADO: MUTACIONES VS. GRADE (PRUEBA CHI-CUADRADO)</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="n">chi2_results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">train_data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">,</span> <span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]]</span>
+<span class="n">target_corr</span> <span class="o">=</span> <span class="n">spearman_corr</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Grade&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
-    <span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
-    <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
-    
-    <span class="n">pct_lgg</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="n">pct_gbm</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gbm_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-    
-    <span class="n">chi2_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-        <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
-        <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n LGG (0)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_lgg</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n GBM (1)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_gbm</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="s1">&#39;Chi2 Stat&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">chi2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-        <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p</span>
-    <span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">PALETTE_GRADE</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">target_corr</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
 
-<span class="n">chi2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">chi2_results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;p-value&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== TOP 10 MUTACIONES/VARIABLES ASOCIADAS A GRADE (CHI-CUADRADO) ===&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">chi2_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1"># 4. ANÁLISIS DE CORRELACIÓN DE SPEARMAN</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
-
-<span class="c1"># Heatmap</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;vlag&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlación de Spearman (Train Set)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="c1"># Correlación directa con Target (Grade)</span>
-<span class="n">target_corr</span> <span class="o">=</span> <span class="n">corr_matrix</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Grade&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">target_corr</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_corr</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;vlag&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Correlación de Spearman con la Severidad (Grade)&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">target_corr</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">target_corr</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Correlación de Spearman de cada Atributo con la Severidad (Grade)&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coeficiente de Correlación (r)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.02</span> <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mf">0.06</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+        <span class="n">width</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> 
+        <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span> 
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">width</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+        <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> 
+        <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== EDAD VS. GRADE ===
-LGG (0) - Edad Promedio: 44.10 ± 13.20 años
-GBM (1) - Edad Promedio: 60.75 ± 13.45 años
-Prueba T-Student: t = -15.9935, p-value = 5.3664e-49
-</pre></div>
+<img alt="_images/48becdc0114a489c1fcdee8c43f97de22ab76449b03f71acea9fbb25faa10827.png" src="_images/48becdc0114a489c1fcdee8c43f97de22ab76449b03f71acea9fbb25faa10827.png" />
+<img alt="_images/bc732227839fd8c5767eaf494868d393aba74d5e965733898e8bfddda7dac0d0.png" src="_images/bc732227839fd8c5767eaf494868d393aba74d5e965733898e8bfddda7dac0d0.png" />
 </div>
-<img alt="_images/f7cbc0b5cd957f56c86c0210100b3e28e251d922959877c0ca6399055594c69c.png" src="_images/f7cbc0b5cd957f56c86c0210100b3e28e251d922959877c0ca6399055594c69c.png" />
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">36</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">36</span> <span class="n">pct_lgg</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">lgg_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span> <span class="n">pct_gbm</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gbm_age</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="n">chi2_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span>     <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">41</span>     <span class="s1">&#39;</span><span class="si">% e</span><span class="s1">n LGG (0)&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pct_lgg</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span>     <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="p">})</span>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cramers_v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcula el coeficiente V de Cramer entre dos variables categóricas.&quot;&quot;&quot;</span>
+    <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">chi2</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">phi2</span> <span class="o">=</span> <span class="n">chi2</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">phi2corr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">phi2</span> <span class="o">-</span> <span class="p">((</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">rcorr</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="p">((</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">kcorr</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="p">((</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">kcorr</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">rcorr</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">phi2corr</span> <span class="o">/</span> <span class="n">denominator</span><span class="p">)</span> <span class="k">if</span> <span class="n">denominator</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
 
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6205,</span> in <span class="ni">Series.sum</span><span class="nt">(self, axis, skipna, numeric_only, min_count, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6196</span> <span class="nd">@doc</span><span class="p">(</span><span class="n">make_doc</span><span class="p">(</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">ndim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="g g-Whitespace">   </span><span class="mi">6197</span> <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">6198</span>     <span class="bp">self</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6203</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">6204</span> <span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">6205</span>     <span class="k">return</span> <span class="n">NDFrame</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="n">min_count</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">train_data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s1">&#39;Age_at_diagnosis&#39;</span><span class="p">]</span>
 
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12055,</span> in <span class="ni">NDFrame.sum</span><span class="nt">(self, axis, skipna, numeric_only, min_count, **kwargs)</span>
-<span class="g g-Whitespace">  </span><span class="mi">12047</span> <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
-<span class="g g-Whitespace">  </span><span class="mi">12048</span>     <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12049</span>     <span class="n">axis</span><span class="p">:</span> <span class="n">Axis</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">  </span><span class="mi">12053</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12054</span> <span class="p">):</span>
-<span class="ne">&gt; </span><span class="mi">12055</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_count_stat_function</span><span class="p">(</span>
-<span class="g g-Whitespace">  </span><span class="mi">12056</span>         <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">nanops</span><span class="o">.</span><span class="n">nansum</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">skipna</span><span class="p">,</span> <span class="n">numeric_only</span><span class="p">,</span> <span class="n">min_count</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">  </span><span class="mi">12057</span>     <span class="p">)</span>
+<span class="n">cramer_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;Grade&#39;</span><span class="p">:</span>
+        <span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+        <span class="n">chi2</span><span class="p">,</span> <span class="n">p_val</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+        <span class="n">v_val</span> <span class="o">=</span> <span class="n">cramers_v</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;Grade&#39;</span><span class="p">])</span>
+        <span class="n">cramer_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
+            <span class="s1">&#39;Chi2 Stat&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">chi2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p_val</span><span class="p">,</span>
+            <span class="s1">&#39;V de Cramer&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">v_val</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="p">})</span>
 
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\generic.py:12038,</span> in <span class="ni">NDFrame._min_count_stat_function</span><span class="nt">(self, name, func, axis, skipna, numeric_only, min_count, **kwargs)</span>
-<span class="g g-Whitespace">  </span><span class="mi">12035</span> <span class="k">elif</span> <span class="n">axis</span> <span class="ow">is</span> <span class="n">lib</span><span class="o">.</span><span class="n">no_default</span><span class="p">:</span>
-<span class="g g-Whitespace">  </span><span class="mi">12036</span>     <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="ne">&gt; </span><span class="mi">12038</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span>
-<span class="g g-Whitespace">  </span><span class="mi">12039</span>     <span class="n">func</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12040</span>     <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12041</span>     <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12042</span>     <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12043</span>     <span class="n">numeric_only</span><span class="o">=</span><span class="n">numeric_only</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12044</span>     <span class="n">min_count</span><span class="o">=</span><span class="n">min_count</span><span class="p">,</span>
-<span class="g g-Whitespace">  </span><span class="mi">12045</span> <span class="p">)</span>
-
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\series.py:6120,</span> in <span class="ni">Series._reduce</span><span class="nt">(self, op, name, axis, skipna, numeric_only, filter_type, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6116</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_get_axis_number</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6118</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">6119</span>     <span class="c1"># dispatch to ExtensionArray interface</span>
-<span class="ne">-&gt; </span><span class="mi">6120</span>     <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6122</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">6123</span>     <span class="c1"># dispatch to numpy arrays</span>
-<span class="g g-Whitespace">   </span><span class="mi">6124</span>     <span class="k">if</span> <span class="n">numeric_only</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s2">&quot;iufcb&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">6125</span>         <span class="c1"># i.e. not is_numeric_dtype(self.dtype)</span>
-
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\categorical.py:2325,</span> in <span class="ni">Categorical._reduce</span><span class="nt">(self, name, skipna, keepdims, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2322</span> <span class="k">def</span> <span class="nf">_reduce</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2323</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">skipna</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">   </span><span class="mi">2324</span> <span class="p">):</span>
-<span class="ne">-&gt; </span><span class="mi">2325</span>     <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_reduce</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2326</span>     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;argmax&quot;</span><span class="p">,</span> <span class="s2">&quot;argmin&quot;</span><span class="p">]:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2327</span>         <span class="c1"># don&#39;t wrap in Categorical!</span>
-<span class="g g-Whitespace">   </span><span class="mi">2328</span>         <span class="k">return</span> <span class="n">result</span>
-
-<span class="nn">File ~\miniconda3\envs\dataviz2026\lib\site-packages\pandas\core\arrays\base.py:1857,</span> in <span class="ni">ExtensionArray._reduce</span><span class="nt">(self, name, skipna, keepdims, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1855</span> <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1856</span> <span class="k">if</span> <span class="n">meth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1857</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1858</span>         <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; with dtype </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1859</span>         <span class="sa">f</span><span class="s2">&quot;does not support reduction &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1860</span>     <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1861</span> <span class="n">result</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="n">skipna</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1862</span> <span class="k">if</span> <span class="n">keepdims</span><span class="p">:</span>
-
-<span class="ne">TypeError</span>: &#39;Categorical&#39; with dtype category does not support reduction &#39;sum&#39;
+<span class="n">df_asociacion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cramer_results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;V de Cramer&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ASOCIACIÓN CATEGÓRICA CON GRADE (CHI-CUADRADO Y V DE CRAMER)&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_asociacion</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ASOCIACIÓN CATEGÓRICA CON GRADE (CHI-CUADRADO Y V DE CRAMER)
+</pre></div>
 </div>
+<div class="output text_html"><style type="text/css">
+</style>
+<table id="T_18d6c">
+  <thead>
+    <tr>
+      <th id="T_18d6c_level0_col0" class="col_heading level0 col0" >Variable</th>
+      <th id="T_18d6c_level0_col1" class="col_heading level0 col1" >Chi2 Stat</th>
+      <th id="T_18d6c_level0_col2" class="col_heading level0 col2" >p-value</th>
+      <th id="T_18d6c_level0_col3" class="col_heading level0 col3" >V de Cramer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_18d6c_row0_col0" class="data row0 col0" >IDH1</td>
+      <td id="T_18d6c_row0_col1" class="data row0 col1" >328.780000</td>
+      <td id="T_18d6c_row0_col2" class="data row0 col2" >0.000000</td>
+      <td id="T_18d6c_row0_col3" class="data row0 col3" >0.699400</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row1_col0" class="data row1 col0" >PTEN</td>
+      <td id="T_18d6c_row1_col1" class="data row1 col1" >88.480000</td>
+      <td id="T_18d6c_row1_col2" class="data row1 col2" >0.000000</td>
+      <td id="T_18d6c_row1_col3" class="data row1 col3" >0.361300</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row2_col0" class="data row2 col0" >ATRX</td>
+      <td id="T_18d6c_row2_col1" class="data row2 col1" >70.240000</td>
+      <td id="T_18d6c_row2_col2" class="data row2 col2" >0.000000</td>
+      <td id="T_18d6c_row2_col3" class="data row2 col3" >0.321500</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row3_col0" class="data row3 col0" >CIC</td>
+      <td id="T_18d6c_row3_col1" class="data row3 col1" >63.930000</td>
+      <td id="T_18d6c_row3_col2" class="data row3 col2" >0.000000</td>
+      <td id="T_18d6c_row3_col3" class="data row3 col3" >0.306500</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row4_col0" class="data row4 col0" >EGFR</td>
+      <td id="T_18d6c_row4_col1" class="data row4 col1" >28.090000</td>
+      <td id="T_18d6c_row4_col2" class="data row4 col2" >0.000000</td>
+      <td id="T_18d6c_row4_col3" class="data row4 col3" >0.201100</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row5_col0" class="data row5 col0" >FUBP1</td>
+      <td id="T_18d6c_row5_col1" class="data row5 col1" >23.930000</td>
+      <td id="T_18d6c_row5_col2" class="data row5 col2" >0.000001</td>
+      <td id="T_18d6c_row5_col3" class="data row5 col3" >0.185000</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row6_col0" class="data row6 col0" >NOTCH1</td>
+      <td id="T_18d6c_row6_col1" class="data row6 col1" >23.380000</td>
+      <td id="T_18d6c_row6_col2" class="data row6 col2" >0.000001</td>
+      <td id="T_18d6c_row6_col3" class="data row6 col3" >0.182800</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row7_col0" class="data row7 col0" >RB1</td>
+      <td id="T_18d6c_row7_col1" class="data row7 col1" >20.870000</td>
+      <td id="T_18d6c_row7_col2" class="data row7 col2" >0.000005</td>
+      <td id="T_18d6c_row7_col3" class="data row7 col3" >0.172200</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row8_col0" class="data row8 col0" >TP53</td>
+      <td id="T_18d6c_row8_col1" class="data row8 col1" >10.150000</td>
+      <td id="T_18d6c_row8_col2" class="data row8 col2" >0.001446</td>
+      <td id="T_18d6c_row8_col3" class="data row8 col3" >0.116800</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row9_col0" class="data row9 col0" >Race</td>
+      <td id="T_18d6c_row9_col1" class="data row9 col1" >11.750000</td>
+      <td id="T_18d6c_row9_col2" class="data row9 col2" >0.008288</td>
+      <td id="T_18d6c_row9_col3" class="data row9 col3" >0.114300</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row10_col0" class="data row10 col0" >MUC16</td>
+      <td id="T_18d6c_row10_col1" class="data row10 col1" >8.100000</td>
+      <td id="T_18d6c_row10_col2" class="data row10 col2" >0.004422</td>
+      <td id="T_18d6c_row10_col3" class="data row10 col3" >0.102900</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row11_col0" class="data row11 col0" >IDH2</td>
+      <td id="T_18d6c_row11_col1" class="data row11 col1" >8.070000</td>
+      <td id="T_18d6c_row11_col2" class="data row11 col2" >0.004493</td>
+      <td id="T_18d6c_row11_col3" class="data row11 col3" >0.102700</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row12_col0" class="data row12 col0" >GRIN2A</td>
+      <td id="T_18d6c_row12_col1" class="data row12 col1" >6.760000</td>
+      <td id="T_18d6c_row12_col2" class="data row12 col2" >0.009315</td>
+      <td id="T_18d6c_row12_col3" class="data row12 col3" >0.092700</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row13_col0" class="data row13 col0" >PIK3R1</td>
+      <td id="T_18d6c_row13_col1" class="data row13 col1" >5.650000</td>
+      <td id="T_18d6c_row13_col2" class="data row13 col2" >0.017479</td>
+      <td id="T_18d6c_row13_col3" class="data row13 col3" >0.083300</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row14_col0" class="data row14 col0" >SMARCA4</td>
+      <td id="T_18d6c_row14_col1" class="data row14 col1" >4.930000</td>
+      <td id="T_18d6c_row14_col2" class="data row14 col2" >0.026367</td>
+      <td id="T_18d6c_row14_col3" class="data row14 col3" >0.076600</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row15_col0" class="data row15 col0" >PDGFRA</td>
+      <td id="T_18d6c_row15_col1" class="data row15 col1" >3.630000</td>
+      <td id="T_18d6c_row15_col2" class="data row15 col2" >0.056803</td>
+      <td id="T_18d6c_row15_col3" class="data row15 col3" >0.062600</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row16_col0" class="data row16 col0" >NF1</td>
+      <td id="T_18d6c_row16_col1" class="data row16 col1" >2.850000</td>
+      <td id="T_18d6c_row16_col2" class="data row16 col2" >0.091643</td>
+      <td id="T_18d6c_row16_col3" class="data row16 col3" >0.052500</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row17_col0" class="data row17 col0" >Gender</td>
+      <td id="T_18d6c_row17_col1" class="data row17 col1" >2.650000</td>
+      <td id="T_18d6c_row17_col2" class="data row17 col2" >0.103271</td>
+      <td id="T_18d6c_row17_col3" class="data row17 col3" >0.049700</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row18_col0" class="data row18 col0" >CSMD3</td>
+      <td id="T_18d6c_row18_col1" class="data row18 col1" >0.620000</td>
+      <td id="T_18d6c_row18_col2" class="data row18 col2" >0.430521</td>
+      <td id="T_18d6c_row18_col3" class="data row18 col3" >0.000000</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row19_col0" class="data row19 col0" >BCOR</td>
+      <td id="T_18d6c_row19_col1" class="data row19 col1" >0.000000</td>
+      <td id="T_18d6c_row19_col2" class="data row19 col2" >1.000000</td>
+      <td id="T_18d6c_row19_col3" class="data row19 col3" >0.000000</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row20_col0" class="data row20 col0" >PIK3CA</td>
+      <td id="T_18d6c_row20_col1" class="data row20 col1" >0.510000</td>
+      <td id="T_18d6c_row20_col2" class="data row20 col2" >0.475326</td>
+      <td id="T_18d6c_row20_col3" class="data row20 col3" >0.000000</td>
+    </tr>
+    <tr>
+      <td id="T_18d6c_row21_col0" class="data row21 col0" >FAT4</td>
+      <td id="T_18d6c_row21_col1" class="data row21 col1" >0.200000</td>
+      <td id="T_18d6c_row21_col2" class="data row21 col2" >0.650786</td>
+      <td id="T_18d6c_row21_col3" class="data row21 col3" >0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IDENTIFICACIÓN DE PARES REDUNDANTES (|r| &gt; 0.7)&quot;</span><span class="p">)</span>
+<span class="n">pares_altos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">columnas</span> <span class="o">=</span> <span class="n">spearman_corr</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">columnas</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">r_val</span> <span class="o">=</span> <span class="n">spearman_corr</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r_val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">:</span>
+            <span class="n">pares_altos</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">columnas</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">columnas</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="nb">round</span><span class="p">(</span><span class="n">r_val</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+
+<span class="n">df_redundancias</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pares_altos</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Variable 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Variable 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Coeficiente (r)&#39;</span><span class="p">])</span>
+
+<span class="n">df_predictores_red</span> <span class="o">=</span> <span class="n">df_redundancias</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">df_redundancias</span><span class="p">[</span><span class="s1">&#39;Variable 1&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;Grade&#39;</span><span class="p">)</span> <span class="o">&amp;</span> 
+    <span class="p">(</span><span class="n">df_redundancias</span><span class="p">[</span><span class="s1">&#39;Variable 2&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;Grade&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">if</span> <span class="n">df_predictores_red</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• No se detectaron pares de variables independientes con correlación |r| &gt; 0.7.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Conclusión: No existen redundancias severas ni riesgo de multicolinealidad entre los predictores.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• Advertencia: Se encontraron los siguientes pares con alta redundancia que justifican exclusión:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_predictores_red</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IDENTIFICACIÓN DE PARES REDUNDANTES (|r| &gt; 0.7)
+• No se detectaron pares de variables independientes con correlación |r| &gt; 0.7.
+• Conclusión: No existen redundancias severas ni riesgo de multicolinealidad entre los predictores.
+</pre></div>
+</div>
+</div>
+</div>
+<p>La prueba de Chi-cuadrado y el coeficiente V de Cramer confirman que el gen <strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong> presenta la mayor fuerza de asociación individual con la severidad del glioma (<span class="math notranslate nohighlight">\(V \approx 0.70\)</span>), seguido por <strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong> y <strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong>. Las variables categóricas como <code class="docutils literal notranslate"><span class="pre">Gender</span></code> y <code class="docutils literal notranslate"><span class="pre">Race</span></code> muestran valores de <span class="math notranslate nohighlight">\(V &lt; 0.10\)</span> con <span class="math notranslate nohighlight">\(p\)</span>-valores no significativos (<span class="math notranslate nohighlight">\(p &gt; 0.05\)</span>), lo que sugiere su baja relevancia predictiva.</p>
+<p>El análisis de correlación de Spearman revela asociaciones críticas entre los perfiles clínico-moleculares y la severidad del glioma. La mutación en el gen <strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong> destaca como el principal biomarcador protector, presentando una fuerte correlación inversa con la malignidad (<span class="math notranslate nohighlight">\(r = -0.70\)</span>), seguido por alteraciones en <strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong> (<span class="math notranslate nohighlight">\(r = -0.33\)</span>) y <strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong> (<span class="math notranslate nohighlight">\(r = -0.31\)</span>), las cuales caracterizan fuertemente a los tumores de bajo grado (LGG). En contraste, la <strong>edad al diagnóstico</strong> exhibe la mayor correlación directa con la gravedad del tumor (<span class="math notranslate nohighlight">\(r = 0.53\)</span>), confirmando demográficamente que el Glioblastoma Multiforme (GBM) predomina en pacientes de mayor edad. A nivel genómico, las mutaciones en <strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong> (<span class="math notranslate nohighlight">\(r = 0.37\)</span>) y <strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong> (<span class="math notranslate nohighlight">\(r = 0.21\)</span>) se perfilan como los principales promotores de malignidad asociados al GBM. Adicionalmente, el mapa de calor expone una co-ocurrencia genética significativa entre <strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong> y <strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong> (<span class="math notranslate nohighlight">\(r \approx 0.35\)</span>), un hallazgo consistente con los patrones biológicos de co-mutación típicamente observados en la progresión de los astrocitomas.</p>
+<ul class="simple">
+<li><p><strong>Atributos con Mayor Correlación Negativa (Asociados a LGG):</strong></p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">IDH1</span></code></strong> (<span class="math notranslate nohighlight">\(r = -0.70\)</span>): Fuerte correlación inversa con la malignidad.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong> (<span class="math notranslate nohighlight">\(r = -0.33\)</span>): Correlación moderada con tumores de bajo grado.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CIC</span></code></strong> (<span class="math notranslate nohighlight">\(r = -0.31\)</span>): Correlación moderada con tumores de bajo grado.</p></li>
+</ul>
+</li>
+<li><p><strong>Atributos con Mayor Correlación Positiva (Asociados a GBM):</strong></p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Age_at_diagnosis</span></code></strong> (<span class="math notranslate nohighlight">\(r = +0.53\)</span>): Fuerte asociación positiva entre la edad avanzada y la severidad del glioma.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">PTEN</span></code></strong> (<span class="math notranslate nohighlight">\(r = +0.37\)</span>): Correlación directa con el diagnóstico de Glioblastoma.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">EGFR</span></code></strong> (<span class="math notranslate nohighlight">\(r = +0.21\)</span>): Indicador positivo de mayor grado tumoral.</p></li>
+</ul>
+</li>
+<li><p><strong>Co-ocurrencias Genéticas:</strong></p>
+<ul>
+<li><p>Se observa una correlación positiva entre <strong><code class="docutils literal notranslate"><span class="pre">TP53</span></code></strong> y <strong><code class="docutils literal notranslate"><span class="pre">ATRX</span></code></strong> (<span class="math notranslate nohighlight">\(r \approx 0.35\)</span>), un patrón conocido de co-mutación en astrocitomas.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 </section>
 
@@ -1776,7 +1917,7 @@ Prueba T-Student: t = -15.9935, p-value = 5.3664e-49
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">Análisis Bivariado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion">Análisis de Correlación</a></li>
 </ul>
   </nav></div>
 
